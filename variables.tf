@@ -4,6 +4,10 @@ variable "naming_conventions_yaml_url" {
   default     = "https://raw.githubusercontent.com/openrba/python-azure-naming/master/custom.yaml" 
 }
 
+variable "naming_rules" {
+  type = string
+}
+
 variable "resource_group_name"{
   description = "Resource group name"
   type        = string

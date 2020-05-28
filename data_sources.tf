@@ -1,13 +1,14 @@
-data "http" "naming_rules" {
-  url = var.naming_conventions_yaml_url
-
-  request_headers = {
-    Accept = "application/yaml"
-  }
-}
+#data "http" "naming_rules" {
+#  url = var.naming_conventions_yaml_url
+#
+#  request_headers = {
+#    Accept = "application/yaml"
+#  }
+#}
 
 locals {
-  naming_rules = yamldecode(data.http.naming_rules.body)
+  naming_rules = yamldecode(var.naming_rules)
+  #naming_rules = yamldecode(data.http.naming_rules.body)
   subnet_types = local.naming_rules.subnetType.allowed_values
 
   valid_subnet_input = [
