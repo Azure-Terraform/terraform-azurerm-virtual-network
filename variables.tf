@@ -4,6 +4,10 @@ variable "naming_conventions_yaml_url" {
   default     = "https://raw.githubusercontent.com/openrba/python-azure-naming/master/custom.yaml" 
 }
 
+variable "naming_rules" {
+  type = string
+}
+
 variable "resource_group_name"{
   description = "Resource group name"
   type        = string
@@ -32,6 +36,6 @@ variable "address_space"{
 
 variable "subnets" {
   description = "Subnet types and lists of CIDRs. format: { [0-9][0-9]-<subnet_type> = cidr }) (increment from 01, cannot be reordered)"
-  #type        = map(list)
-  #default     = {}
+  type        = map(list(string))
+  default     = {}
 }
