@@ -1,11 +1,6 @@
-variable "naming_conventions_yaml_url" {
-  description = "URL for naming conventions yaml file"
-  type        = string
-  default     = "https://raw.githubusercontent.com/openrba/python-azure-naming/master/custom.yaml" 
-}
-
 variable "naming_rules" {
-  type = string
+  description = "naming conventions yaml file" 
+  type        = string
 }
 
 variable "resource_group_name"{
@@ -29,9 +24,9 @@ variable "tags" {
 }
 
 # Networking
-variable "address_space"{
+variable "address_space" {
   description = "CIDRs for virtual network"
-  type        = list
+  type        = list(string)
 }
 
 variable "subnets" {
