@@ -15,18 +15,17 @@ service-market-environment-location-product
 | Name | Version |
 |------|---------|
 | azurerm | >= 2.0.0 |
-| http | >= 1.2.0 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| address\_space | CIDRs for virtual network | `list` | n/a | yes |
+| address\_space | CIDRs for virtual network | `list(string)` | n/a | yes |
 | location | Azure Region | `string` | n/a | yes |
 | names | Names to be applied to resources | `map(string)` | n/a | yes |
-| naming\_conventions\_yaml\_url | URL for naming conventions yaml file | `string` | `"https://raw.githubusercontent.com/openrba/python-azure-naming/master/custom.yaml"` | no |
+| naming\_rules | naming conventions yaml file | `string` | n/a | yes |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
-| subnets | Subnet types and CIDRs. format: { [0-9][0-9]-<subnet\_type> = cidr }) (increment from 01, cannot be reordered) | `map(string)` | `{}` | no |
+| subnets | Subnet types and lists of CIDRs. format: { [0-9][0-9]-<subnet\_type> = cidr }) (increment from 01, cannot be reordered) | `map(list(string))` | `{}` | no |
 | tags | Tags to be applied to resources | `map(string)` | n/a | yes |
 
 ## Outputs
