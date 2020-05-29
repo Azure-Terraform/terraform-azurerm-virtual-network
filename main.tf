@@ -11,7 +11,8 @@ resource "azurerm_subnet" "subnet" {
   name                 = "${substr(keys(var.subnets)[count.index], 3, -1)}-subnet"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefix       = values(var.subnets)[count.index]
+  #address_prefixes     = [values(var.subnets)[count.index]]
+  address_prefixes     = values(var.subnets)[count.index]
 }
 
 resource "azurerm_subnet_network_security_group_association" "subnet_nsg" {

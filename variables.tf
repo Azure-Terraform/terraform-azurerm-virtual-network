@@ -31,7 +31,7 @@ variable "address_space"{
 }
 
 variable "subnets" {
-  description = "Subnet types and CIDRs. format: { [0-9][0-9]-<subnet_type> = cidr }) (increment from 01, cannot be reordered)"
-  type        = map(string)
-  default     = {}
+  description = "Subnet types and lists of CIDRs. format: { [0-9][0-9]-<subnet_type> = cidr }) (increment from 01, cannot be reordered)"
+  #type        = map(list)
+  #default     = {}
 }
