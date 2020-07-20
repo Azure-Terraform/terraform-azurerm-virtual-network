@@ -3,6 +3,11 @@ output "vnet" {
   value        = azurerm_virtual_network.vnet
 }
 
+output "vnet_name" {
+  description  = "Virtual network resource"
+  value        = azurerm_virtual_network.vnet.name
+}
+
 output "subnet" {
   description = "Map of subnet resources"
   value       = zipmap(
