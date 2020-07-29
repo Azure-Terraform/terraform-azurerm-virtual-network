@@ -17,3 +17,8 @@ output "nsg_name" {
   description = "network security group name"
   value       = azurerm_network_security_group.nsg.name
 }
+
+output "subnet" {
+  description = "subnet data object"
+  value       = azurerm_subnet.subnet
+}

@@ -1,7 +1,6 @@
-variable "naming_conventions_yaml_url" {
-  description = "url for naming conventions yaml file"
+variable "naming_rules" {
+  description = "naming conventions yaml file"
   type        = string
-  default     = "https://raw.githubusercontent.com/openrba/python-azure-naming/master/custom.yaml" 
 }
 
 variable "resource_group_name"{
@@ -35,9 +34,9 @@ variable "subnet_type" {
   type        = string
 }
 
-variable "subnet_cidr"{
-  description = "CIDR for subnet"
-  type        = string
+variable "cidrs" {
+  description = "CIDRs for subnet"
+  type        = list(string)
 }
 
 # Subnet Options
