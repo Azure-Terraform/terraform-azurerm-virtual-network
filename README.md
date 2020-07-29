@@ -25,17 +25,17 @@ service-market-environment-location-product
 | names | Names to be applied to resources | `map(string)` | n/a | yes |
 | naming\_rules | naming conventions yaml file | `string` | n/a | yes |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
-| subnets | Subnet types and lists of CIDRs. format: { [0-9][0-9]-<subnet\_type> = cidr }) (increment from 01, cannot be reordered) | `map(list(string))` | `{}` | no |
+| subnets | Subnet types and lists of CIDRs, policies, endpoints and delegations | <pre>map(object({<br>                      cidrs = list(string)<br>                      enforce_private_link_endpoint_network_policies = bool<br>                      enforce_private_link_service_network_policies  = bool<br>                      service_endpoints                              = list(string)<br>                      delegations                                    = map(object({<br>                                                                          name    = string<br>                                                                          actions = list(string)<br>                                                                       }))<br>                }))</pre> | `{}` | no |
 | tags | Tags to be applied to resources | `map(string)` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| subnet | Map of subnet resources |
+| subnet | Map of subnet data objects |
 | subnet\_nsg\_ids | Map of subnet ids to associated network\_security\_group ids |
 | subnet\_nsg\_names | Map of subnet names to associated network\_security\_group names |
-| vnet | Virtual network resource |
+| vnet | Virtual network data object |
 <!--- END_TF_DOCS --->
 
 <br />
