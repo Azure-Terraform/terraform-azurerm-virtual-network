@@ -16,6 +16,87 @@ service-market-environment-location-product
 |------|---------|
 | azurerm | >= 2.0.0 |
 
+
+## Example Usage
+```hcl
+variable "names" {
+  description = "names to be applied to resources"
+  type        = map(string)
+}
+
+variable "tags" {
+  description = "tags to be applied to resources"
+  type        = map(string)
+}
+
+variable "location" {
+  description = "Azure Region"
+  type        = string
+}
+
+# Configure Providers
+provider "azurerm" {
+  version = ">=2.2.0"
+  subscription_id = "00000000-0000-0000-0000-0000000"
+  features {}
+}
+
+##
+# Pre-Built Modules 
+##
+
+module "subscription" {
+  source          = "github.com/Azure-Terraform/terraform-azurerm-subscription-data.git?ref=v1.0.0"
+  subscription_id = "00000000-0000-0000-0000-0000000"
+}
+
+module "rules" {
+  source = "git@github.com:[redacted]/python-azure-naming.git?ref=tf"
+}
+
+# For tags and info see https://github.com/Azure-Terraform/terraform-azurerm-metadata 
+# For naming convention see https://github.com/redacted/python-azure-naming 
+module "metadata" {
+  source = "github.com/Azure-Terraform/terraform-azurerm-metadata.git?ref=v1.1.0"
+
+  naming_rules = module.rules.yaml
+  
+  market              = "us"
+  location            = "useast1"
+  sre_team            = "alpha"
+  environment         = "sandbox"
+  project             = "mssql"
+  business_unit       = "iog"
+  product_group       = "tfe"
+  product_name        = "vnet"
+  subscription_id     = "00000000-0000-0000-0000-0000000"
+  subscription_type   = "nonprod"
+  resource_group_type = "app"
+}
+
+module "virtual_network" {
+  source = "github.com/Azure-Terraform/terraform-azurerm-virtual-network.git?ref=v1.0.0"
+  
+  #toggle NSG
+  enable_nsg   = false
+  naming_rules = module.rules.yaml
+
+  resource_group_name = "vnet-test-sandbox-eastus-01"
+  location            = module.metadata.location
+  names               = module.metadata.names
+  tags                = module.metadata.tags
+
+  address_space = ["192.168.123.0/24"]
+
+  subnets = {
+    "01-iaas-private"     = ["192.168.123.0/27"]
+    "02-iaas-public"      = ["192.168.123.32/27"]
+    "03-iaas-outbound"    = ["192.168.123.64/27"]
+  }
+  
+}
+```
+
 ## Inputs
 
 | Name | Description | Type | Default | Required |
