@@ -34,3 +34,9 @@ variable "subnets" {
   type        = map(list(string))
   default     = {}
 }
+
+variable "enable_nsg" {
+  description = "Toggle on/off the use of a network security group. This well need to be turned off for a private link endpoint"
+  type        = bool
+  default     = true
+}

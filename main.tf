@@ -7,7 +7,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  count                = length(var.subnets)
+  count                = var.enable_nsg && length(var.subnets) > 0 ? length(var.subnets) : 1
   name                 = "${substr(keys(var.subnets)[count.index], 3, -1)}-subnet"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
@@ -15,13 +15,13 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "subnet_nsg" {
-  count                     = length(var.subnets)
+  count                     = var.enable_nsg && length(var.subnets) > 0 ? length(var.subnets) : 0
   subnet_id                 = azurerm_subnet.subnet.*.id[count.index]
   network_security_group_id = azurerm_network_security_group.nsg.*.id[count.index]
 }
 
 resource "azurerm_network_security_group" "nsg" {
-  count               = length(var.subnets)
+  count               = var.enable_nsg && length(var.subnets) > 0 ? length(var.subnets) : 0
   name                = "${var.names.resource_group_type}-${var.names.product_name}-${substr(keys(var.subnets)[count.index], 3, -1)}-security-group"
   location            = var.location
   resource_group_name = var.resource_group_name
@@ -29,7 +29,7 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_network_security_rule" "deny_all_inbound" {
-  count                       = length(var.subnets)
+  count                       = var.enable_nsg && length(var.subnets) > 0 ? length(var.subnets) : 0
   name                        = "DenyAllInbound"
   priority                    = 4096
   direction                   = "Inbound"
@@ -44,7 +44,7 @@ resource "azurerm_network_security_rule" "deny_all_inbound" {
 }
 
 resource "azurerm_network_security_rule" "deny_all_outbound" {
-  count                       = length(var.subnets)
+  count                       = var.enable_nsg && length(var.subnets) > 0 ? length(var.subnets) : 0
   name                        = "DenyAllOutbound"
   priority                    = 4096
   direction                   = "Outbound"
