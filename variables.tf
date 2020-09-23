@@ -30,7 +30,16 @@ variable "address_space" {
 }
 
 variable "subnets" {
-  description = "Subnet types and lists of CIDRs. format: { [0-9][0-9]-<subnet_type> = cidr }) (increment from 01, cannot be reordered)"
-  type        = map(list(string))
+  description = "Subnet types and lists of CIDRs, policies, endpoints and delegations"
+  type        = map(object({
+                      cidrs = list(string)
+                      enforce_private_link_endpoint_network_policies = bool
+                      enforce_private_link_service_network_policies  = bool
+                      service_endpoints                              = list(string)
+                      delegations                                    = map(object({
+                                                                          name    = string
+                                                                          actions = list(string)
+                                                                       }))
+                }))
   default     = {}
 }

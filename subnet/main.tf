@@ -2,7 +2,7 @@ resource "azurerm_subnet" "subnet" {
   name                 = "${var.subnet_type}-subnet"
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.virtual_network_name
-  address_prefix       = var.subnet_cidr
+  address_prefixes     = var.cidrs
 
   enforce_private_link_endpoint_network_policies = var.enforce_private_link_endpoint_network_policies
   enforce_private_link_service_network_policies  = var.enforce_private_link_service_network_policies
