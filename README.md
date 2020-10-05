@@ -26,7 +26,7 @@ service-market-environment-location-product
 | naming\_rules | naming conventions yaml file | `string` | n/a | yes |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
 | subnet\_defaults | lists of CIDRs, policies, endpoints and delegations | <pre>object({<br>                  cidrs = list(string)<br>                  enforce_private_link_endpoint_network_policies = bool<br>                  enforce_private_link_service_network_policies  = bool<br>                  service_endpoints                              = list(string)<br>                  delegations                                    = map(object({<br>                                                                          name    = string<br>                                                                          actions = list(string)<br>                                                                       }))<br>                })</pre> | <pre>{<br>  "cidrs": [],<br>  "delegations": {},<br>  "enforce_private_link_endpoint_network_policies": false,<br>  "enforce_private_link_service_network_policies": false,<br>  "service_endpoints": []<br>}</pre> | no |
-| subnets | Map of subnets. Allowed keys are the same as for subnet\_defaults. | `map` | `{}` | no |
+| subnets | Map of subnets. Keys are subnet names, Allowed values are the same as for subnet\_defaults. | `map` | `{}` | no |
 | tags | Tags to be applied to resources | `map(string)` | n/a | yes |
 
 ## Outputs
