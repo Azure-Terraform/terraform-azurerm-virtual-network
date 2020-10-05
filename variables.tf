@@ -30,7 +30,7 @@ variable "address_space" {
 }
 
 variable "subnets" {
-  description = "Map of subnets. Allowed keys are the same as for subnet_defaults."
+  description = "Map of subnets. Keys are subnet names, Allowed values are the same as for subnet_defaults."
   type        = map
   default     = {}
 }
