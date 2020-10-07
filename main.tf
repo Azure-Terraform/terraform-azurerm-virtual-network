@@ -8,7 +8,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 module "subnet" {
   source   = "./subnet"
-  for_each = var.subnets
+  for_each = local.subnets
 
   naming_rules        = var.naming_rules
   resource_group_name = var.resource_group_name

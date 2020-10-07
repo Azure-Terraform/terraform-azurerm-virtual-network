@@ -30,16 +30,28 @@ variable "address_space" {
 }
 
 variable "subnets" {
-  description = "Subnet types and lists of CIDRs, policies, endpoints and delegations"
-  type        = map(object({
-                      cidrs = list(string)
-                      enforce_private_link_endpoint_network_policies = bool
-                      enforce_private_link_service_network_policies  = bool
-                      service_endpoints                              = list(string)
-                      delegations                                    = map(object({
+  description = "Map of subnets. Keys are subnet names, Allowed values are the same as for subnet_defaults."
+  type        = map
+  default     = {}
+}
+
+variable "subnet_defaults" {
+  description = "lists of CIDRs, policies, endpoints and delegations"
+  type        = object({
+                  cidrs = list(string)
+                  enforce_private_link_endpoint_network_policies = bool
+                  enforce_private_link_service_network_policies  = bool
+                  service_endpoints                              = list(string)
+                  delegations                                    = map(object({
                                                                           name    = string
                                                                           actions = list(string)
                                                                        }))
-                }))
-  default     = {}
+                })
+  default     = { 
+                  cidrs                                          = []
+                  enforce_private_link_endpoint_network_policies = false
+                  enforce_private_link_service_network_policies  = false
+                  service_endpoints                              = []
+                  delegations                                    = {}
+                }
 }
