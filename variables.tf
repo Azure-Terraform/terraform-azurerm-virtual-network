@@ -46,6 +46,8 @@ variable "subnet_defaults" {
                                                                           name    = string
                                                                           actions = list(string)
                                                                        }))
+                  deny_all_ingress                               = bool
+                  deny_all_egress                                = bool
                 })
   default     = { 
                   cidrs                                          = []
@@ -53,5 +55,7 @@ variable "subnet_defaults" {
                   enforce_private_link_service_network_policies  = false
                   service_endpoints                              = []
                   delegations                                    = {}
+                  deny_all_ingress                               = true
+                  deny_all_egress                                = true
                 }
 }

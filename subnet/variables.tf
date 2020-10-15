@@ -39,6 +39,18 @@ variable "cidrs" {
   type        = list(string)
 }
 
+variable "deny_all_ingress" {
+  description = "default deny all ingress in subnet nsg rules"
+  type        = bool
+  default     = true
+}
+
+variable "deny_all_egress" {
+  description = "default deny all egress in subnet nsg rules"
+  type        = bool
+  default     = true
+}
+
 # Subnet Options
 variable "enforce_private_link_endpoint_network_policies" {
   description = "enable network policies for the private link endpoint on the subnet"

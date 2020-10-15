@@ -1,5 +1,5 @@
 resource "azurerm_subnet" "subnet" {
-  name                 = "${var.subnet_type}-subnet"
+  name                 = var.subnet_type
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.virtual_network_name
   address_prefixes     = var.cidrs
@@ -34,6 +34,7 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_network_security_rule" "deny_all_inbound" {
+  count                       = (var.deny_all_ingress ? 1 : 0)
   name                        = "DenyAllInbound"
   priority                    = 4096
   direction                   = "Inbound"
@@ -48,6 +49,7 @@ resource "azurerm_network_security_rule" "deny_all_inbound" {
 }
 
 resource "azurerm_network_security_rule" "deny_all_outbound" {
+  count                       = (var.deny_all_egress ? 1 : 0)
   name                        = "DenyAllOutbound"
   priority                    = 4096
   direction                   = "Outbound"
