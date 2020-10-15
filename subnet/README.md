@@ -18,6 +18,8 @@ This module will create a new subnet in a pre-existing Azure Virtual Network.
 |------|-------------|------|---------|:-----:|
 | cidrs | CIDRs for subnet | `list(string)` | n/a | yes |
 | delegations | delegation blocks for services | <pre>map(object({<br>                  name    = string<br>                  actions = list(string)<br>                }))</pre> | `{}` | no |
+| deny\_all\_egress | default deny all egress in subnet nsg rules | `bool` | `true` | no |
+| deny\_all\_ingress | default deny all ingress in subnet nsg rules | `bool` | `true` | no |
 | enforce\_private\_link\_endpoint\_network\_policies | enable network policies for the private link endpoint on the subnet | `bool` | `false` | no |
 | enforce\_private\_link\_service\_network\_policies | enable network policies for the private link service on the subnet | `bool` | `false` | no |
 | location | Azure Region | `string` | n/a | yes |
