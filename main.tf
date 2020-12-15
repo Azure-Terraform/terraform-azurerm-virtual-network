@@ -26,6 +26,8 @@ module "subnet" {
   service_endpoints = each.value.service_endpoints
   delegations       = each.value.delegations
 
-  deny_all_ingress = each.value.deny_all_ingress
-  deny_all_egress  = each.value.deny_all_egress
+  allow_internet_outbound = each.value.allow_internet_outbound
+  allow_lb_inbound        = each.value.allow_lb_inbound
+  allow_vnet_inbound      = each.value.allow_vnet_inbound
+  allow_vnet_outbound     = each.value.allow_vnet_outbound
 }

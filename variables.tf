@@ -38,7 +38,7 @@ variable "subnets" {
 variable "subnet_defaults" {
   description = "lists of CIDRs, policies, endpoints and delegations"
   type        = object({
-                  cidrs = list(string)
+                  cidrs                                          = list(string)
                   enforce_private_link_endpoint_network_policies = bool
                   enforce_private_link_service_network_policies  = bool
                   service_endpoints                              = list(string)
@@ -46,8 +46,10 @@ variable "subnet_defaults" {
                                                                           name    = string
                                                                           actions = list(string)
                                                                        }))
-                  deny_all_ingress                               = bool
-                  deny_all_egress                                = bool
+                  allow_internet_outbound                        = bool   # allow outbound traffic to internet
+                  allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer
+                  allow_vnet_inbound                             = bool   # allow all inbound from virtual network
+                  allow_vnet_outbound                            = bool   # allow all outbound from virtual network
                 })
   default     = { 
                   cidrs                                          = []
@@ -55,7 +57,9 @@ variable "subnet_defaults" {
                   enforce_private_link_service_network_policies  = false
                   service_endpoints                              = []
                   delegations                                    = {}
-                  deny_all_ingress                               = true
-                  deny_all_egress                                = true
+                  allow_internet_outbound                        = false
+                  allow_lb_inbound                               = false
+                  allow_vnet_inbound                             = false
+                  allow_vnet_outbound                            = false
                 }
 }

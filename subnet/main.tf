@@ -34,7 +34,6 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_network_security_rule" "deny_all_inbound" {
-  count                       = (var.deny_all_ingress ? 1 : 0)
   name                        = "DenyAllInbound"
   priority                    = 4096
   direction                   = "Inbound"
@@ -49,7 +48,6 @@ resource "azurerm_network_security_rule" "deny_all_inbound" {
 }
 
 resource "azurerm_network_security_rule" "deny_all_outbound" {
-  count                       = (var.deny_all_egress ? 1 : 0)
   name                        = "DenyAllOutbound"
   priority                    = 4096
   direction                   = "Outbound"
@@ -59,6 +57,66 @@ resource "azurerm_network_security_rule" "deny_all_outbound" {
   destination_port_range      = "*"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "allow_lb_inbound" {
+  count                       = (var.allow_lb_inbound ? 1 : 0)
+  name                        = "AllowAzureLoadBalancerIn"
+  priority                    = 4095
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "AzureLoadBalancer"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "allow_internet_outbound" {
+  count                       = (var.allow_internet_outbound ? 1 : 0)
+  name                        = "AllowInternetOut"
+  priority                    = 4095
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "Internet"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "allow_vnet_inbound" {
+  count                       = (var.allow_vnet_inbound ? 1 : 0)
+  name                        = "AllowVnetIn"
+  priority                    = 4094
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "allow_vnet_outbound" {
+  count                       = (var.allow_vnet_outbound ? 1 : 0)
+  name                        = "AllowVnetOut"
+  priority                    = 4094
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
