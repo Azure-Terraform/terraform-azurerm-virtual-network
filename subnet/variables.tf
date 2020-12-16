@@ -39,16 +39,24 @@ variable "cidrs" {
   type        = list(string)
 }
 
-variable "deny_all_ingress" {
-  description = "default deny all ingress in subnet nsg rules"
+variable "allow_internet_outbound" {
+  description = "allow outbound traffic to internet"
   type        = bool
-  default     = true
 }
 
-variable "deny_all_egress" {
-  description = "default deny all egress in subnet nsg rules"
+variable "allow_lb_inbound" {
+  description = "allow inbound traffic from Azure Load Balancer"
   type        = bool
-  default     = true
+}
+
+variable "allow_vnet_inbound" {
+  description = "allow all inbound from virtual network"
+  type        = bool
+}
+
+variable "allow_vnet_outbound" {
+  description = "allow all outbound from virtual network"
+  type        = bool
 }
 
 # Subnet Options
