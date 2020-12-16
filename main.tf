@@ -31,3 +31,16 @@ module "subnet" {
   allow_vnet_inbound      = each.value.allow_vnet_inbound
   allow_vnet_outbound     = each.value.allow_vnet_outbound
 }
+
+resource "azurerm_virtual_network_peering" "peer" {
+  for_each                     = local.peers
+  name                         = each.key
+  resource_group_name          = var.resource_group_name
+  virtual_network_name         = azurerm_virtual_network.vnet.name
+  remote_virtual_network_id    = each.value.id
+  allow_virtual_network_access = each.value.allow_virtual_network_access
+  allow_forwarded_traffic      = each.value.allow_forwarded_traffic
+  allow_gateway_transit        = each.value.allow_gateway_transit
+  use_remote_gateways          = each.value.use_remote_gateways
+}
+

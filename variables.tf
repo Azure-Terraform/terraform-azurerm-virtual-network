@@ -36,7 +36,7 @@ variable "subnets" {
 }
 
 variable "subnet_defaults" {
-  description = "lists of CIDRs, policies, endpoints and delegations"
+  description = "Maps of CIDRs, policies, endpoints and delegations"
   type        = object({
                   cidrs                                          = list(string)
                   enforce_private_link_endpoint_network_policies = bool
@@ -63,3 +63,28 @@ variable "subnet_defaults" {
                   allow_vnet_outbound                            = false
                 }
 }
+
+variable "peers" {
+  description = "Peer virtual networks.  Keys are names, allowed values are same as for peer_defaults. Id value is required."
+  type        = map
+  default     = {}
+}
+
+variable "peer_defaults" {
+  description = "Maps of peer arguments."
+  type        = object({
+                  id                           = string
+                  allow_virtual_network_access = bool
+                  allow_forwarded_traffic      = bool
+                  allow_gateway_transit        = bool
+                  use_remote_gateways          = bool
+                })
+  default     = {
+                  id                           = null    # remote virtual network id
+                  allow_virtual_network_access = true    # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_virtual_network_access
+                  allow_forwarded_traffic      = false   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_forwarded_traffic
+                  allow_gateway_transit        = false   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_gateway_transit
+                  use_remote_gateways          = false   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#use_remote_gateways
+                }
+}
+
