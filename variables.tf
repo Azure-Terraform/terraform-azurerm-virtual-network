@@ -31,7 +31,7 @@ variable "address_space" {
 
 variable "subnets" {
   description = "Map of subnets. Keys are subnet names, Allowed values are the same as for subnet_defaults."
-  type        = map
+  type        = any
   default     = {}
 }
 
@@ -66,7 +66,7 @@ variable "subnet_defaults" {
 
 variable "peers" {
   description = "Peer virtual networks.  Keys are names, allowed values are same as for peer_defaults. Id value is required."
-  type        = map
+  type        = any
   default     = {}
 }
 
