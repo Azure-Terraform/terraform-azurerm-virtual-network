@@ -50,6 +50,7 @@ variable "subnet_defaults" {
                   allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer
                   allow_vnet_inbound                             = bool   # allow all inbound from virtual network
                   allow_vnet_outbound                            = bool   # allow all outbound from virtual network
+                  route_table_association                        = string
                 })
   default     = { 
                   cidrs                                          = []
@@ -61,7 +62,17 @@ variable "subnet_defaults" {
                   allow_lb_inbound                               = false
                   allow_vnet_inbound                             = false
                   allow_vnet_outbound                            = false
+                  route_table_association                        = ""
                 }
+}
+
+variable "route_tables" {
+  description = "Maps of route tables"
+  type        = map(object({
+                  disable_bgp_route_propagation = bool
+                  routes                        = map(map(string))
+                }))
+  default     = {}
 }
 
 variable "peers" {

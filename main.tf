@@ -32,6 +32,31 @@ module "subnet" {
   allow_vnet_outbound     = each.value.allow_vnet_outbound
 }
 
+resource "azurerm_route_table" "route_table" {
+  for_each                      = var.route_tables
+  name                          = "${var.resource_group_name}-${each.key}-routetable"
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
+
+  dynamic "route" {
+    for_each = each.value.routes
+    content {
+      name                   = route.key
+      address_prefix         = route.value.address_prefix
+      next_hop_type          = route.value.next_hop_type
+      next_hop_in_ip_address = try(route.value.next_hop_in_ip_address, null)
+    }
+  }
+}
+
+resource "azurerm_subnet_route_table_association" "association" {
+  depends_on     = [module.subnet, azurerm_route_table.route_table]
+  for_each       = local.route_table_associations
+  subnet_id      = module.subnet[each.key].id
+  route_table_id = azurerm_route_table.route_table[each.value].id
+}
+
 resource "azurerm_virtual_network_peering" "peer" {
   for_each                     = local.peers
   name                         = each.key
