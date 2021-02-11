@@ -70,7 +70,9 @@ variable "route_tables" {
   description = "Maps of route tables"
   type        = map(object({
                   disable_bgp_route_propagation = bool
-                  routes                        = map(map(string))
+                  routes                        = map(map(string)) 
+                  # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)
+                  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route
                 }))
   default     = {}
 }
