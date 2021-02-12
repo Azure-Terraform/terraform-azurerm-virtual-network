@@ -19,6 +19,12 @@ locals {
   }
 }
 
+resource "random_string" "random" {
+  length  = 12
+  upper   = false
+  special = false
+}
+
 resource "tls_private_key" "ssh_keys" {
   for_each    = local.hosts
   algorithm   = "RSA"
@@ -56,7 +62,7 @@ module "metadata" {
   project             = "https://github.com/Azure-Terraform/terraform-azurerm-virtual-network/tree/master/example/bastion"
   location            = "eastus2"
   environment         = "sandbox"
-  product_name        = "contosoweb"
+  product_name        = random_string.random.result
   business_unit       = "infra"
   product_group       = "contoso"
   subscription_id     = module.subscription.output.subscription_id
