@@ -32,21 +32,18 @@ output "subnets" {
   value       = zipmap(
     [for subnet in module.subnet: subnet.subnet.name],
     [for subnet in module.subnet: {
-       name                = subnet.subnet.name 
-       id                  = subnet.subnet.id
-       resource_group_name = subnet.subnet.resource_group_name
-       address_prefixes    = subnet.subnet.address_prefixes
-       service_endpoints   = subnet.subnet.service_endpoints
-
+       name                        = subnet.subnet.name 
+       id                          = subnet.subnet.id
+       resource_group_name         = subnet.subnet.resource_group_name
+       address_prefixes            = subnet.subnet.address_prefixes
+       service_endpoints           = subnet.subnet.service_endpoints
        network_security_group_name = subnet.nsg_name
        network_security_group_id   = subnet.nsg_id
+       virtual_network_name        = azurerm_virtual_network.vnet.name
+       virtual_network_id          = azurerm_virtual_network.vnet.id
        route_table_id              = (contains(keys(local.route_table_associations), subnet.subnet.name) ?
                                        azurerm_subnet_route_table_association.association[subnet.subnet.name].id :
                                        null)
-
-       virtual_network_name                = azurerm_virtual_network.vnet.name
-       virtual_network_id                  = azurerm_virtual_network.vnet.id
-       virtual_network_resource_group_name = azurerm_virtual_network.vnet.resource_group_name
     }]
   )
 }
