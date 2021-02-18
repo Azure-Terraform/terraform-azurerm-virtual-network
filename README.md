@@ -36,10 +36,11 @@ service-market-environment-location-product
 
 | Name | Description |
 |------|-------------|
-| subnet | Map of subnet data objects |
-| subnet\_nsg\_ids | Map of subnet ids to associated network\_security\_group ids |
-| subnet\_nsg\_names | Map of subnet names to associated network\_security\_group names |
-| vnet | Virtual network data object |
+| subnet | Map of subnet data objects. |
+| subnet\_nsg\_ids | Map of subnet ids to associated network\_security\_group ids. |
+| subnet\_nsg\_names | Map of subnet names to associated network\_security\_group names. |
+| subnets | Maps of subnet info. |
+| vnet | Virtual network data object. |
 <!--- END_TF_DOCS --->
 
 <br />
