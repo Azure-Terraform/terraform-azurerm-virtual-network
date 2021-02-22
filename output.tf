@@ -42,7 +42,7 @@ output "subnets" {
        virtual_network_name        = azurerm_virtual_network.vnet.name
        virtual_network_id          = azurerm_virtual_network.vnet.id
        route_table_id              = (contains(keys(local.route_table_associations), subnet.subnet.name) ?
-                                       azurerm_subnet_route_table_association.association[subnet.subnet.name].id :
+                                       azurerm_subnet_route_table_association.association[subnet.subnet.name].route_table_id :
                                        null)
     }]
   )
