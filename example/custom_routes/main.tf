@@ -2,10 +2,10 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.32.0"
+      version = "=2.44.0"
     }
   }
-  required_version = "=0.13.5"
+  required_version = "=0.14.7"
 }
 
 provider "azurerm" {
@@ -69,18 +69,18 @@ module "virtual_network" {
   address_space = ["10.1.0.0/22"]
 
   subnets = {
-    "iaas-public"   = { cidrs                    = ["10.1.0.0/24"]
-                        allow_vnet_inbound       = true
-                        allow_vnet_outbound      = true
+    "iaas-public"   = { cidrs               = ["10.1.0.0/24"]
+                        allow_vnet_inbound  = true
+                        allow_vnet_outbound = true
                       }
-    "iaas-private"   = { cidrs                   = ["10.1.1.0/24"]
-                        allow_vnet_inbound       = true
-                        allow_vnet_outbound      = true
+    "iaas-private"   = { cidrs              = ["10.1.1.0/24"]
+                        allow_vnet_inbound  = true
+                        allow_vnet_outbound = true
                       }
     "iaas-outbound"   = { cidrs = ["10.1.2.0/24"]
-                        allow_vnet_inbound       = true
-                        allow_vnet_outbound      = true
-                        route_table_association  = "default"
+                        allow_vnet_inbound      = true
+                        allow_vnet_outbound     = true
+                        route_table_association = "default"
                       }
   }
 

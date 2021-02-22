@@ -2,10 +2,10 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.32.0"
+      version = ">=2.44.0"
     }
   }
-  required_version = "=0.13.5"
+  required_version = ">=0.14.7"
 }
 
 provider "azurerm" {
@@ -120,7 +120,7 @@ resource "azurerm_network_interface" "bastion" {
 
   ip_configuration {
     name                          = "bastion"
-    subnet_id                     = module.virtual_network.subnet["iaas-public"].id
+    subnet_id                     = module.virtual_network.subnets["iaas-public"].id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.bastion.id
   }
@@ -138,8 +138,8 @@ resource "azurerm_network_security_rule" "bastion_in" {
   destination_port_range      = "22"
   source_address_prefixes     = values(local.access_list)
   destination_address_prefix  = azurerm_network_interface.bastion.private_ip_address
-  resource_group_name         = module.resource_group.name
-  network_security_group_name = module.virtual_network.subnet_nsg_names["iaas-public"]
+  resource_group_name         = module.virtual_network.subnets["iaas-public"].resource_group_name
+  network_security_group_name = module.virtual_network.subnets["iaas-public"].network_security_group_name
 }
 
 resource "azurerm_network_interface" "private" {
@@ -149,7 +149,7 @@ resource "azurerm_network_interface" "private" {
 
   ip_configuration {
     name                          = "private"
-    subnet_id                     = module.virtual_network.subnet["iaas-private"].id
+    subnet_id                     = module.virtual_network.subnets["iaas-private"].id
     private_ip_address_allocation = "Dynamic"
   }
 
@@ -219,5 +219,5 @@ output "bastion_ssh" {
 }
 
 output "private_ssh" {
-  value = "ssh -i private.pem -o ProxyCommand=\"ssh -W %h:%p -i bastion.pem adminuser@${azurerm_public_ip.bastion.ip_address}\" adminuser@${azurerm_network_interface.private.private_ip_address}"
+  value = "ssh -i private.pem -o ProxyCommand='ssh -W %h:%p -i bastion.pem adminuser@${azurerm_public_ip.bastion.ip_address}' adminuser@${azurerm_network_interface.private.private_ip_address}"
 }
