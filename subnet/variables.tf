@@ -1,8 +1,3 @@
-variable "naming_rules" {
-  description = "naming conventions yaml file"
-  type        = string
-}
-
 variable "resource_group_name"{
   description = "Resource group name"
   type        = string
@@ -21,6 +16,12 @@ variable "names" {
 variable "tags" {
   description = "tags to be applied to resources"
   type        = map(string)
+}
+
+variable "naming_rules" {
+  description = "naming conventions yaml file"
+  type        = string
+  default     = ""
 }
 
 # Networking
