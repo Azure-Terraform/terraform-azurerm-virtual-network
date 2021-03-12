@@ -82,9 +82,7 @@ module "virtual_network" {
                         allow_vnet_outbound     = true
                         route_table_association = "default"
                       }
-   "foo" = { cidrs = ["10.1.3.0/24"] }
   }
-  enforce_subnet_names = false
 
   route_tables = {
     default = {
