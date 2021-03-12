@@ -62,7 +62,7 @@ variable "subnet_defaults" {
                   allow_lb_inbound                               = false
                   allow_vnet_inbound                             = false
                   allow_vnet_outbound                            = false
-                  route_table_association                        = ""
+                  route_table_association                        = null
                 }
 }
 
