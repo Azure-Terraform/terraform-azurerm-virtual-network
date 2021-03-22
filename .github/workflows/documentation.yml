@@ -9,7 +9,7 @@ jobs:
         ref: ${{ github.event.pull_request.head.ref }}
 
     - name: Module
-      uses: Dirrk/terraform-docs@v1.0.7
+      uses: Dirrk/terraform-docs@v1.0.8
       with:
         tf_docs_working_dir: .
         tf_docs_output_file: README.md
@@ -17,7 +17,7 @@ jobs:
         tf_docs_git_push: 'true'
 
     - name: Submodule
-      uses: Dirrk/terraform-docs@v1.0.7
+      uses: Dirrk/terraform-docs@v1.0.8
       with:
         tf_docs_working_dir: ./subnet/
         tf_docs_output_file: README.md
