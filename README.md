@@ -10,6 +10,14 @@ service-market-environment-location-product
 <br />
 
 <!--- BEGIN_TF_DOCS --->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.13.0 |
+| azurerm | >= 2.0.0 |
+| http | >= 1.2.0 |
+
 ## Providers
 
 | Name | Version |
@@ -19,7 +27,7 @@ service-market-environment-location-product
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | address\_space | CIDRs for virtual network | `list(string)` | n/a | yes |
 | location | Azure Region | `string` | n/a | yes |
 | names | Names to be applied to resources | `map(string)` | n/a | yes |
@@ -41,6 +49,7 @@ service-market-environment-location-product
 | subnet\_nsg\_names | Map of subnet names to associated network\_security\_group names. |
 | subnets | Maps of subnet info. |
 | vnet | Virtual network data object. |
+
 <!--- END_TF_DOCS --->
 
 <br />
