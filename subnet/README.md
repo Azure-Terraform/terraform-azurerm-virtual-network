@@ -6,6 +6,10 @@ This module will create a new subnet in a pre-existing Azure Virtual Network.
 <br /><br />
 
 <!--- BEGIN_TF_DOCS --->
+## Requirements
+
+No requirements.
+
 ## Providers
 
 | Name | Version |
@@ -15,7 +19,7 @@ This module will create a new subnet in a pre-existing Azure Virtual Network.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | allow\_internet\_outbound | allow outbound traffic to internet | `bool` | n/a | yes |
 | allow\_lb\_inbound | allow inbound traffic from Azure Load Balancer | `bool` | n/a | yes |
 | allow\_vnet\_inbound | allow all inbound from virtual network | `bool` | n/a | yes |
@@ -42,6 +46,7 @@ This module will create a new subnet in a pre-existing Azure Virtual Network.
 | nsg\_id | network security group id |
 | nsg\_name | network security group name |
 | subnet | subnet data object |
+
 <!--- END_TF_DOCS --->
 
 <br />
