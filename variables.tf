@@ -4,10 +4,11 @@ variable "naming_rules" {
 }
 
 variable "dns_servers" {
-  description = "if applicable , a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver" 
+  description = "If applicable, a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver" 
   type        = list(string)
   default     = null
 }
+
 variable "resource_group_name"{
   description = "Resource group name"
   type        = string
