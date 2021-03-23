@@ -3,6 +3,11 @@ variable "naming_rules" {
   type        = string
 }
 
+variable "dnsserver" {
+  description = "custom dns server" 
+  type        = list(string)
+  default     = []
+}
 variable "resource_group_name"{
   description = "Resource group name"
   type        = string
