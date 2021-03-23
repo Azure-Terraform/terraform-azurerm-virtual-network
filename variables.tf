@@ -3,12 +3,6 @@ variable "naming_rules" {
   type        = string
 }
 
-variable "dns_servers" {
-  description = "If applicable, a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver" 
-  type        = list(string)
-  default     = null
-}
-
 variable "resource_group_name"{
   description = "Resource group name"
   type        = string
@@ -33,6 +27,12 @@ variable "tags" {
 variable "address_space" {
   description = "CIDRs for virtual network"
   type        = list(string)
+}
+
+variable "dns_servers" {
+  description = "If applicable, a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver" 
+  type        = list(string)
+  default     = null
 }
 
 variable "subnets" {
