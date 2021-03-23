@@ -29,7 +29,7 @@ service-market-environment-location-product
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | address\_space | CIDRs for virtual network | `list(string)` | n/a | yes |
-| dns\_servers | if applicable , a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver | `list(string)` | `null` | no |
+| dns\_servers | If applicable, a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver | `list(string)` | `null` | no |
 | location | Azure Region | `string` | n/a | yes |
 | names | Names to be applied to resources | `map(string)` | n/a | yes |
 | naming\_rules | naming conventions yaml file | `string` | n/a | yes |
