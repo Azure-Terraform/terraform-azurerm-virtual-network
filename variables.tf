@@ -3,8 +3,8 @@ variable "naming_rules" {
   type        = string
 }
 
-variable "dnsserver" {
-  description = "custom dns server" 
+variable "dns_servers" {
+  description = "Custom DNS servers (if applicable)." 
   type        = list(string)
   default     = []
 }
