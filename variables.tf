@@ -1,8 +1,3 @@
-variable "naming_rules" {
-  description = "naming conventions yaml file" 
-  type        = string
-}
-
 variable "resource_group_name"{
   description = "Resource group name"
   type        = string
@@ -21,6 +16,18 @@ variable "names" {
 variable "tags" {
   description = "Tags to be applied to resources"
   type        = map(string)
+}
+
+variable "naming_rules" {
+  description = "naming conventions yaml file" 
+  type        = string
+  default     = ""
+}
+
+variable "enforce_subnet_names" {
+  description = "enforce subnet names based on naming_rules variable"
+  type        = bool
+  default     = true
 }
 
 # Networking

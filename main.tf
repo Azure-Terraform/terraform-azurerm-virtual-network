@@ -11,11 +11,13 @@ module "subnet" {
   source   = "./subnet"
   for_each = local.subnets
 
-  naming_rules        = var.naming_rules
+  names               = var.names
   resource_group_name = var.resource_group_name
   location            = var.location
-  names               = var.names
   tags                = var.tags
+
+  naming_rules         = var.naming_rules
+  enforce_subnet_names = local.enforce_subnet_names
 
   virtual_network_name = azurerm_virtual_network.vnet.name
   subnet_type          = each.key
