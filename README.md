@@ -30,9 +30,10 @@ service-market-environment-location-product
 |------|-------------|------|---------|:--------:|
 | address\_space | CIDRs for virtual network | `list(string)` | n/a | yes |
 | dns\_servers | If applicable, a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver | `list(string)` | `null` | no |
+| enforce\_subnet\_names | enforce subnet names based on naming\_rules variable | `bool` | `true` | no |
 | location | Azure Region | `string` | n/a | yes |
 | names | Names to be applied to resources | `map(string)` | n/a | yes |
-| naming\_rules | naming conventions yaml file | `string` | n/a | yes |
+| naming\_rules | naming conventions yaml file | `string` | `""` | no |
 | peer\_defaults | Maps of peer arguments. | <pre>object({<br>                  id                           = string<br>                  allow_virtual_network_access = bool<br>                  allow_forwarded_traffic      = bool<br>                  allow_gateway_transit        = bool<br>                  use_remote_gateways          = bool<br>                })</pre> | <pre>{<br>  "allow_forwarded_traffic": false,<br>  "allow_gateway_transit": false,<br>  "allow_virtual_network_access": true,<br>  "id": null,<br>  "use_remote_gateways": false<br>}</pre> | no |
 | peers | Peer virtual networks.  Keys are names, allowed values are same as for peer\_defaults. Id value is required. | `any` | `{}` | no |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
