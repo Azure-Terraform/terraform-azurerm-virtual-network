@@ -30,33 +30,21 @@ resource "azurerm_network_security_group" "nsg" {
   name                = "${var.names.resource_group_type}-${var.names.product_name}-${var.subnet_type}-security-group"
   location            = var.location
   resource_group_name = var.resource_group_name
-  tags                = merge(var.tags, {subnet_type = lookup(local.allowed_subnet_info, var.subnet_type, var.subnet_type)})
+  tags                = merge(var.tags, { subnet_type = lookup(local.allowed_subnet_info, var.subnet_type, var.subnet_type) })
 }
 
-resource "azurerm_network_security_rule" "deny_all_inbound" {
-  name                        = "DenyAllInbound"
-  priority                    = 4096
+# Inbound rules
+resource "azurerm_network_security_rule" "allow_vnet_inbound" {
+  count                       = (var.allow_vnet_inbound ? 1 : 0)
+  name                        = "AllowVnetIn"
+  priority                    = 4094
   direction                   = "Inbound"
-  access                      = "Deny"
+  access                      = "Allow"
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.nsg.name
-}
-
-resource "azurerm_network_security_rule" "deny_all_outbound" {
-  name                        = "DenyAllOutbound"
-  priority                    = 4096
-  direction                   = "Outbound"
-  access                      = "Deny"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
+  source_address_prefix       = "VirtualNetwork"
+  destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
@@ -76,32 +64,32 @@ resource "azurerm_network_security_rule" "allow_lb_inbound" {
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
 
-resource "azurerm_network_security_rule" "allow_internet_outbound" {
-  count                       = (var.allow_internet_outbound ? 1 : 0)
-  name                        = "AllowInternetOut"
-  priority                    = 4095
+resource "azurerm_network_security_rule" "deny_all_inbound" {
+  name                        = "DenyAllInbound"
+  priority                    = 4096
+  direction                   = "Inbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+# Outbound rules
+resource "azurerm_network_security_rule" "allow_all_outbound" {
+  count                       = (var.subnet_type == "azure-appgateway" ? 1 : 0)
+  name                        = "AllowAllOutbound"
+  priority                    = 3217
   direction                   = "Outbound"
   access                      = "Allow"
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
   source_address_prefix       = "*"
-  destination_address_prefix  = "Internet"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.nsg.name
-}
-
-resource "azurerm_network_security_rule" "allow_vnet_inbound" {
-  count                       = (var.allow_vnet_inbound ? 1 : 0)
-  name                        = "AllowVnetIn"
-  priority                    = 4094
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "VirtualNetwork"
-  destination_address_prefix  = "VirtualNetwork"
+  destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
@@ -117,6 +105,35 @@ resource "azurerm_network_security_rule" "allow_vnet_outbound" {
   destination_port_range      = "*"
   source_address_prefix       = "VirtualNetwork"
   destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "allow_internet_outbound" {
+  count                       = (var.allow_internet_outbound ? 1 : 0)
+  name                        = "AllowInternetOut"
+  priority                    = 4095
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "Internet"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.nsg.name
+}
+
+resource "azurerm_network_security_rule" "deny_all_outbound" {
+  name                        = "DenyAllOutbound"
+  priority                    = 4096
+  direction                   = "Outbound"
+  access                      = "Deny"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.name
 }
