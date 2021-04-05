@@ -125,6 +125,7 @@ resource "azurerm_network_security_rule" "allow_internet_outbound" {
 }
 
 resource "azurerm_network_security_rule" "deny_all_outbound" {
+  count                       = (var.subnet_type == "azure-appgateway" ? 0 : 1)
   name                        = "DenyAllOutbound"
   priority                    = 4096
   direction                   = "Outbound"
