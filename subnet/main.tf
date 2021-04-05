@@ -79,21 +79,6 @@ resource "azurerm_network_security_rule" "deny_all_inbound" {
 }
 
 # Outbound rules
-resource "azurerm_network_security_rule" "allow_all_outbound" {
-  count                       = (var.subnet_type == "azure-appgateway" ? 1 : 0)
-  name                        = "AllowAllOutbound"
-  priority                    = 3217
-  direction                   = "Outbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "*"
-  source_address_prefix       = "*"
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.nsg.name
-}
-
 resource "azurerm_network_security_rule" "allow_vnet_outbound" {
   count                       = (var.allow_vnet_outbound ? 1 : 0)
   name                        = "AllowVnetOut"
