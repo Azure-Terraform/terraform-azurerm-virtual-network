@@ -39,6 +39,11 @@ variable "cidrs" {
   type        = list(string)
 }
 
+variable "configure_nsg_rules" {
+  description = "Configure network security group rules"
+  type        = bool
+}
+
 variable "allow_internet_outbound" {
   description = "allow outbound traffic to internet"
   type        = bool

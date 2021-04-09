@@ -26,6 +26,7 @@ module "subnet" {
   service_endpoints = each.value.service_endpoints
   delegations       = each.value.delegations
 
+  configure_nsg_rules     = each.value.configure_nsg_rules
   allow_internet_outbound = each.value.allow_internet_outbound
   allow_lb_inbound        = each.value.allow_lb_inbound
   allow_vnet_inbound      = each.value.allow_vnet_inbound

@@ -46,6 +46,7 @@ variable "subnet_defaults" {
                                                                           name    = string
                                                                           actions = list(string)
                                                                        }))
+                  configure_nsg_rules                            = bool   # deny ingress/egress traffic and configure nsg rules based on below parameters
                   allow_internet_outbound                        = bool   # allow outbound traffic to internet
                   allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer
                   allow_vnet_inbound                             = bool   # allow all inbound from virtual network
@@ -58,6 +59,7 @@ variable "subnet_defaults" {
                   enforce_private_link_service_network_policies  = false
                   service_endpoints                              = []
                   delegations                                    = {}
+                  configure_nsg_rules                            = true
                   allow_internet_outbound                        = false
                   allow_lb_inbound                               = false
                   allow_vnet_inbound                             = false
@@ -100,4 +102,3 @@ variable "peer_defaults" {
                   use_remote_gateways          = false   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#use_remote_gateways
                 }
 }
-
