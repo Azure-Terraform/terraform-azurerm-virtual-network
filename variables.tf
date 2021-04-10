@@ -35,13 +35,13 @@ variable "subnets" {
   default     = {}
 
   validation {
-    condition     = (length(compact([for subnet in var.subnets: (!lookup(subnet, "configure_nsg_rules", false) &&
+    condition     = (length(compact([for subnet in var.subnets: (!lookup(subnet, "configure_nsg_rules", true) &&
                      (contains(keys(subnet), "allow_internet_outbound") ||
                      contains(keys(subnet), "allow_lb_inbound") ||
                      contains(keys(subnet), "allow_vnet_inbound") ||
                      contains(keys(subnet), "allow_vnet_outbound")) ?
                      "invalid" : "")])) == 0)
-    error_message = "Subnet rules only allowed when configure_nsg_rules is set to \"true\"."
+    error_message = "Subnet rules not allowed when configure_nsg_rules is set to \"false\"."
   }
 }
 
