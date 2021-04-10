@@ -57,10 +57,10 @@ variable "subnet_defaults" {
                                                                           actions = list(string)
                                                                        }))
                   configure_nsg_rules                            = bool   # deny ingress/egress traffic and configure nsg rules based on below parameters
-                  allow_internet_outbound                        = bool   # allow outbound traffic to internet
-                  allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer
-                  allow_vnet_inbound                             = bool   # allow all inbound from virtual network
-                  allow_vnet_outbound                            = bool   # allow all outbound from virtual network
+                  allow_internet_outbound                        = bool   # allow outbound traffic to internet (configure_nsg_rules must be set to true)
+                  allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer (configure_nsg_rules must be set to true)
+                  allow_vnet_inbound                             = bool   # allow all inbound from virtual network (configure_nsg_rules must be set to true)
+                  allow_vnet_outbound                            = bool   # allow all outbound from virtual network (configure_nsg_rules must be set to true)
                   route_table_association                        = string
                 })
   default     = { 
