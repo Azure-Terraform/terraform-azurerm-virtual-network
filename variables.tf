@@ -33,6 +33,16 @@ variable "subnets" {
   description = "Map of subnets. Keys are subnet names, Allowed values are the same as for subnet_defaults."
   type        = any
   default     = {}
+
+  validation {
+    condition     = (length(compact([for subnet in var.subnets: (!lookup(subnet, "configure_nsg_rules", false) &&
+                     (contains(keys(subnet), "allow_internet_outbound") ||
+                     contains(keys(subnet), "allow_lb_inbound") ||
+                     contains(keys(subnet), "allow_vnet_inbound") ||
+                     contains(keys(subnet), "allow_vnet_outbound")) ?
+                     "invalid" : "")])) == 0)
+    error_message = "Subnet rules only allowed when configure_nsg_rules is set to \"true\"."
+  }
 }
 
 variable "subnet_defaults" {
