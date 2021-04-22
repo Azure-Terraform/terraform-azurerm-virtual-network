@@ -46,6 +46,7 @@ service-market-environment-location-product
 
 | Name | Description |
 |------|-------------|
+| route\_tables | Maps of custom route tables. |
 | subnet | Map of subnet data objects. |
 | subnet\_nsg\_ids | Map of subnet ids to associated network\_security\_group ids. |
 | subnet\_nsg\_names | Map of subnet names to associated network\_security\_group names. |
