@@ -91,14 +91,14 @@ module "virtual_network" {
   address_space = ["10.1.0.0/22"]
 
   subnets = {
-    "iaas-public"   = { cidrs                    = ["10.1.0.0/24"]
-                        allow_vnet_inbound       = true
-                        allow_vnet_outbound      = true
-                      }
-    "iaas-private"   = { cidrs                   = ["10.1.1.0/24"]
-                        allow_vnet_inbound       = true
-                        allow_vnet_outbound      = true
-                      }
+    "iaas-public"  = { cidrs                    = ["10.1.0.0/24"]
+                       allow_vnet_inbound       = true
+                       allow_vnet_outbound      = true
+                     }
+    "iaas-private" = { cidrs                   = ["10.1.1.0/24"]
+                       allow_vnet_inbound       = true
+                       allow_vnet_outbound      = true
+                     }
   }
 }
 

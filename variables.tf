@@ -46,6 +46,16 @@ variable "subnets" {
   description = "Map of subnets. Keys are subnet names, Allowed values are the same as for subnet_defaults."
   type        = any
   default     = {}
+
+  validation {
+    condition     = (length(compact([for subnet in var.subnets: (!lookup(subnet, "configure_nsg_rules", true) &&
+                     (contains(keys(subnet), "allow_internet_outbound") ||
+                     contains(keys(subnet), "allow_lb_inbound") ||
+                     contains(keys(subnet), "allow_vnet_inbound") ||
+                     contains(keys(subnet), "allow_vnet_outbound")) ?
+                     "invalid" : "")])) == 0)
+    error_message = "Subnet rules not allowed when configure_nsg_rules is set to \"false\"."
+  }
 }
 
 variable "subnet_defaults" {
@@ -59,10 +69,11 @@ variable "subnet_defaults" {
                                                                           name    = string
                                                                           actions = list(string)
                                                                        }))
-                  allow_internet_outbound                        = bool   # allow outbound traffic to internet
-                  allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer
-                  allow_vnet_inbound                             = bool   # allow all inbound from virtual network
-                  allow_vnet_outbound                            = bool   # allow all outbound from virtual network
+                  configure_nsg_rules                            = bool   # deny ingress/egress traffic and configure nsg rules based on below parameters
+                  allow_internet_outbound                        = bool   # allow outbound traffic to internet (configure_nsg_rules must be set to true)
+                  allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer (configure_nsg_rules must be set to true)
+                  allow_vnet_inbound                             = bool   # allow all inbound from virtual network (configure_nsg_rules must be set to true)
+                  allow_vnet_outbound                            = bool   # allow all outbound from virtual network (configure_nsg_rules must be set to true)
                   route_table_association                        = string
                 })
   default     = { 
@@ -71,6 +82,7 @@ variable "subnet_defaults" {
                   enforce_private_link_service_network_policies  = false
                   service_endpoints                              = []
                   delegations                                    = {}
+                  configure_nsg_rules                            = true
                   allow_internet_outbound                        = false
                   allow_lb_inbound                               = false
                   allow_vnet_inbound                             = false
@@ -113,4 +125,3 @@ variable "peer_defaults" {
                   use_remote_gateways          = false   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#use_remote_gateways
                 }
 }
-
