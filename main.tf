@@ -38,13 +38,14 @@ module "subnet" {
 
 resource "azurerm_route_table" "route_table" {
   for_each                      = var.route_tables
+
   name                          = "${var.resource_group_name}-${each.key}-routetable"
   location                      = var.location
   resource_group_name           = var.resource_group_name
   disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
 
   dynamic "route" {
-    for_each = each.value.routes
+    for_each = (each.value.use_inline_routes ? each.value.routes : {})
     content {
       name                   = route.key
       address_prefix         = route.value.address_prefix
@@ -52,6 +53,17 @@ resource "azurerm_route_table" "route_table" {
       next_hop_in_ip_address = try(route.value.next_hop_in_ip_address, null)
     }
   }
+}
+
+resource "azurerm_route" "non_inline_route" {
+  for_each = local.non_inline_routes
+
+  name                = each.value.name
+  resource_group_name = var.resource_group_name
+  route_table_name    = azurerm_route_table.route_table[each.value.table].name
+  address_prefix      = each.value.address_prefix
+  next_hop_type       = each.value.next_hop_type
+  next_hop_in_ip_address = try(each.value.next_hop_in_ip_address, null)
 }
 
 resource "azurerm_subnet_route_table_association" "association" {

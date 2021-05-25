@@ -87,6 +87,7 @@ module "virtual_network" {
   route_tables = {
     default = {
       disable_bgp_route_propagation = true
+      use_inline_routes             = false
       routes = {
         internet = {
           address_prefix         = "0.0.0.0/0"
