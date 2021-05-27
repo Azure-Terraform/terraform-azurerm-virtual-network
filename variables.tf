@@ -107,13 +107,14 @@ variable "aks_subnets" {
   description = "AKS subnets"
   type        = object({
     private = object({
-      cidr = list(string)
+      cidrs = list(string)
       service_endpoints = list(string)
     })
     public = object({
-      cidr = list(string)
+      cidrs = list(string)
       service_endpoints = list(string)
     })
+    route_table = string
   })
   default = null
 }

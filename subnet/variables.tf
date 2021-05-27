@@ -27,8 +27,8 @@ variable "naming_rules" {
 variable "enforce_subnet_names" {
   description = "enforce subnet naming rules"
   type        = bool
+  default     = false
 }
-  
 
 # Networking
 variable "virtual_network_name" {

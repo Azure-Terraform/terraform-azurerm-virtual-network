@@ -38,7 +38,7 @@ module "subnet" {
 
 module "aks_subnet" {
   source = "./subnet"
-  for_each = (var.aks_subnets == null ? {} : var.aks_subnets)
+  for_each = local.aks_subnets
 
   names               = var.names
   resource_group_name = var.resource_group_name
@@ -83,14 +83,24 @@ resource "azurerm_route" "non_inline_route" {
 }
 
 resource "azurerm_subnet_route_table_association" "association" {
-  depends_on     = [module.subnet, azurerm_route_table.route_table]
+  depends_on     = [module.aks_subnet, azurerm_route_table.route_table]
   for_each       = local.route_table_associations
+
   subnet_id      = module.subnet[each.key].id
   route_table_id = azurerm_route_table.route_table[each.value].id
 }
 
+resource "azurerm_subnet_route_table_association" "aks" {
+  depends_on     = [module.aks_subnet, azurerm_route_table.route_table]
+  for_each       = local.aks_subnets
+
+  subnet_id      = module.aks_subnet[each.key].id
+  route_table_id = azurerm_route_table.route_table[var.aks_subnets.route_table].id
+}
+
 resource "azurerm_virtual_network_peering" "peer" {
   for_each                     = local.peers
+
   name                         = each.key
   resource_group_name          = var.resource_group_name
   virtual_network_name         = azurerm_virtual_network.vnet.name
