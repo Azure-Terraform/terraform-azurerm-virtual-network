@@ -48,6 +48,18 @@ output "subnets" {
   )
 }
 
+output "aks_subnets" {
+  description = "AKS private/public subnet info."
+  value = {
+    private = {
+      id = module.aks_subnet["private"].subnet.id
+    }
+    public = {
+      id = module.aks_subnet["private"].subnet.id
+    }
+  }
+}
+
 output "route_tables" {
   description = "Maps of custom route tables."
   value = { for k, v in var.route_tables :
