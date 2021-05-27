@@ -57,6 +57,7 @@ output "aks_subnets" {
     public = {
       id = module.aks_subnet["private"].subnet.id
     }
+    route_table_id = azurerm_route_table.route_table[var.aks_subnets.route_table].id
   }
 }
 
