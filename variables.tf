@@ -103,6 +103,21 @@ variable "route_tables" {
   default     = {}
 }
 
+variable "aks_subnets" {
+  description = "AKS subnets"
+  type        = object({
+    private = object({
+      cidr = list(string)
+      service_endpoints = list(string)
+    })
+    public = object({
+      cidr = list(string)
+      service_endpoints = list(string)
+    })
+  })
+  default = null
+}
+
 variable "peers" {
   description = "Peer virtual networks.  Keys are names, allowed values are same as for peer_defaults. Id value is required."
   type        = any
