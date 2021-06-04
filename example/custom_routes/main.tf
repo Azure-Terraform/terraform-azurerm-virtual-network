@@ -2,10 +2,10 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.44.0"
+      version = "~> 2.44"
     }
   }
-  required_version = ">=0.14.8"
+  required_version = "~> 0.15"
 }
 
 provider "azurerm" {
@@ -32,7 +32,7 @@ module "naming" {
 }
 
 module "metadata" {
-  source = "github.com/Azure-Terraform/terraform-azurerm-metadata.git?ref=v1.1.0"
+  source = "github.com/Azure-Terraform/terraform-azurerm-metadata.git?ref=v1.5.0"
 
   naming_rules = module.naming.yaml
 
@@ -49,7 +49,7 @@ module "metadata" {
 }
 
 module "resource_group" {
-  source = "github.com/Azure-Terraform/terraform-azurerm-resource-group.git?ref=v1.0.0"
+  source = "github.com/Azure-Terraform/terraform-azurerm-resource-group.git?ref=v2.0.0"
 
   location = module.metadata.location
   names    = module.metadata.names
