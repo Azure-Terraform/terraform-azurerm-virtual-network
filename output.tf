@@ -50,7 +50,7 @@ output "subnets" {
 
 output "aks_subnets" {
   description = "AKS private/public subnet info."
-  value = {
+  value = (var.aks_subnets == null ? null : {
     private = {
       id = module.aks_subnet["private"].subnet.id
     }
@@ -58,7 +58,7 @@ output "aks_subnets" {
       id = module.aks_subnet["public"].subnet.id
     }
     route_table_id = azurerm_route_table.route_table[var.aks_subnets.route_table].id
-  }
+  })
 }
 
 output "route_tables" {
