@@ -16,7 +16,6 @@ service-market-environment-location-product
 |------|---------|
 | terraform | >= 0.13.0 |
 | azurerm | >= 2.0.0 |
-| http | >= 1.2.0 |
 
 ## Providers
 
