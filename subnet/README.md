@@ -20,16 +20,16 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| allow\_internet\_outbound | allow outbound traffic to internet | `bool` | n/a | yes |
-| allow\_lb\_inbound | allow inbound traffic from Azure Load Balancer | `bool` | n/a | yes |
-| allow\_vnet\_inbound | allow all inbound from virtual network | `bool` | n/a | yes |
-| allow\_vnet\_outbound | allow all outbound from virtual network | `bool` | n/a | yes |
+| allow\_internet\_outbound | allow outbound traffic to internet | `bool` | `false` | no |
+| allow\_lb\_inbound | allow inbound traffic from Azure Load Balancer | `bool` | `false` | no |
+| allow\_vnet\_inbound | allow all inbound from virtual network | `bool` | `false` | no |
+| allow\_vnet\_outbound | allow all outbound from virtual network | `bool` | `false` | no |
 | cidrs | CIDRs for subnet | `list(string)` | n/a | yes |
-| configure\_nsg\_rules | Configure network security group rules | `bool` | n/a | yes |
+| configure\_nsg\_rules | Configure network security group rules | `bool` | `false` | no |
 | delegations | delegation blocks for services | <pre>map(object({<br>                  name    = string<br>                  actions = list(string)<br>                }))</pre> | `{}` | no |
 | enforce\_private\_link\_endpoint\_network\_policies | enable network policies for the private link endpoint on the subnet | `bool` | `false` | no |
 | enforce\_private\_link\_service\_network\_policies | enable network policies for the private link service on the subnet | `bool` | `false` | no |
-| enforce\_subnet\_names | enforce subnet naming rules | `bool` | n/a | yes |
+| enforce\_subnet\_names | enforce subnet naming rules | `bool` | `false` | no |
 | location | Azure Region | `string` | n/a | yes |
 | names | names to be applied to resources | `map(string)` | n/a | yes |
 | naming\_rules | naming conventions yaml file | `string` | `""` | no |
