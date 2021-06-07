@@ -95,11 +95,28 @@ variable "route_tables" {
   description = "Maps of route tables"
   type        = map(object({
                   disable_bgp_route_propagation = bool
+                  use_inline_routes             = bool # Setting to true will revert any external route additions.
                   routes                        = map(map(string)) 
                   # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)
                   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route
                 }))
   default     = {}
+}
+
+variable "aks_subnets" {
+  description = "AKS subnets"
+  type        = object({
+    private = object({
+      cidrs = list(string)
+      service_endpoints = list(string)
+    })
+    public = object({
+      cidrs = list(string)
+      service_endpoints = list(string)
+    })
+    route_table = string
+  })
+  default = null
 }
 
 variable "peers" {

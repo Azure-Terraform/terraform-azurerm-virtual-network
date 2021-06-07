@@ -27,8 +27,8 @@ variable "naming_rules" {
 variable "enforce_subnet_names" {
   description = "enforce subnet naming rules"
   type        = bool
+  default     = false
 }
-  
 
 # Networking
 variable "virtual_network_name" {
@@ -49,26 +49,31 @@ variable "cidrs" {
 variable "configure_nsg_rules" {
   description = "Configure network security group rules"
   type        = bool
+  default     = false
 }
 
 variable "allow_internet_outbound" {
   description = "allow outbound traffic to internet"
   type        = bool
+  default     = false
 }
 
 variable "allow_lb_inbound" {
   description = "allow inbound traffic from Azure Load Balancer"
   type        = bool
+  default     = false
 }
 
 variable "allow_vnet_inbound" {
   description = "allow all inbound from virtual network"
   type        = bool
+  default     = false
 }
 
 variable "allow_vnet_outbound" {
   description = "allow all outbound from virtual network"
   type        = bool
+  default     = false
 }
 
 # Subnet Options
@@ -98,4 +103,3 @@ variable "delegations" {
                 }))
   default     = {}
 }
-

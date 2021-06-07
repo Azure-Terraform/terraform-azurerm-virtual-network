@@ -36,15 +36,32 @@ module "subnet" {
   allow_vnet_outbound     = each.value.allow_vnet_outbound
 }
 
+module "aks_subnet" {
+  source = "./subnet"
+  for_each = local.aks_subnets
+
+  names               = var.names
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  tags                = var.tags
+
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  subnet_type          = "aks-${each.key}"
+  cidrs                = each.value.cidrs
+
+  service_endpoints = each.value.service_endpoints
+}
+
 resource "azurerm_route_table" "route_table" {
   for_each                      = var.route_tables
+
   name                          = "${var.resource_group_name}-${each.key}-routetable"
   location                      = var.location
   resource_group_name           = var.resource_group_name
   disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
 
   dynamic "route" {
-    for_each = each.value.routes
+    for_each = (each.value.use_inline_routes ? each.value.routes : {})
     content {
       name                   = route.key
       address_prefix         = route.value.address_prefix
@@ -54,15 +71,36 @@ resource "azurerm_route_table" "route_table" {
   }
 }
 
+resource "azurerm_route" "non_inline_route" {
+  for_each = local.non_inline_routes
+
+  name                = each.value.name
+  resource_group_name = var.resource_group_name
+  route_table_name    = azurerm_route_table.route_table[each.value.table].name
+  address_prefix      = each.value.address_prefix
+  next_hop_type       = each.value.next_hop_type
+  next_hop_in_ip_address = try(each.value.next_hop_in_ip_address, null)
+}
+
 resource "azurerm_subnet_route_table_association" "association" {
-  depends_on     = [module.subnet, azurerm_route_table.route_table]
+  depends_on     = [module.aks_subnet, azurerm_route_table.route_table]
   for_each       = local.route_table_associations
+
   subnet_id      = module.subnet[each.key].id
   route_table_id = azurerm_route_table.route_table[each.value].id
 }
 
+resource "azurerm_subnet_route_table_association" "aks" {
+  depends_on     = [module.aks_subnet, azurerm_route_table.route_table]
+  for_each       = local.aks_subnets
+
+  subnet_id      = module.aks_subnet[each.key].id
+  route_table_id = azurerm_route_table.route_table[var.aks_subnets.route_table].id
+}
+
 resource "azurerm_virtual_network_peering" "peer" {
   for_each                     = local.peers
+
   name                         = each.key
   resource_group_name          = var.resource_group_name
   virtual_network_name         = azurerm_virtual_network.vnet.name

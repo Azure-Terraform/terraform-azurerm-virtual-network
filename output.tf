@@ -48,6 +48,19 @@ output "subnets" {
   )
 }
 
+output "aks_subnets" {
+  description = "AKS private/public subnet info."
+  value = (var.aks_subnets == null ? null : {
+    private = {
+      id = module.aks_subnet["private"].subnet.id
+    }
+    public = {
+      id = module.aks_subnet["public"].subnet.id
+    }
+    route_table_id = azurerm_route_table.route_table[var.aks_subnets.route_table].id
+  })
+}
+
 output "route_tables" {
   description = "Maps of custom route tables."
   value = { for k, v in var.route_tables :
