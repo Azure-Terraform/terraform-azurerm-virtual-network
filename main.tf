@@ -110,4 +110,3 @@ resource "azurerm_virtual_network_peering" "peer" {
   allow_gateway_transit        = each.value.allow_gateway_transit
   use_remote_gateways          = each.value.use_remote_gateways
 }
-
