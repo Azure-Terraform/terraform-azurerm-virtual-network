@@ -52,10 +52,24 @@ output "aks_subnets" {
   description = "AKS private/public subnet info."
   value = (var.aks_subnets == null ? null : {
     private = {
-      id = module.aks_subnet["private"].subnet.id
+      id                          = module.aks_subnet["private"].subnet.id
+      resource_group_name         = module.aks_subnet["private"].subnet.resource_group_name
+      address_prefixes            = subnet.aks_subnet["private"].address_prefixes
+      service_endpoints           = subnet.aks_subnet["private"].service_endpoints
+      network_security_group_id   = module.aks_subnet["private"].subnet.nsg_id
+      network_security_group_name = module.aks_subnet["private"].subnet.nsg_name
+      virtual_network_name        = azurerm_virtual_network.vnet.name
+      virtual_network_id          = azurerm_virtual_network.vnet.id
     }
     public = {
-      id = module.aks_subnet["public"].subnet.id
+      id                          = module.aks_subnet["public"].subnet.id
+      address_prefixes            = subnet.aks_subnet["public"].address_prefixes
+      service_endpoints           = subnet.aks_subnet["public"].service_endpoints
+      resource_group_name         = module.aks_subnet["public"].subnet.resource_group_name
+      network_security_group_id   = module.aks_subnet["public"].subnet.nsg_id
+      network_security_group_name = module.aks_subnet["public"].subnet.nsg_name
+      virtual_network_name        = azurerm_virtual_network.vnet.name
+      virtual_network_id          = azurerm_virtual_network.vnet.id
     }
     route_table_id = azurerm_route_table.route_table[var.aks_subnets.route_table].id
   })
