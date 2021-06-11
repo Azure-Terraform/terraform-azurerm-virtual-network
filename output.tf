@@ -54,8 +54,8 @@ output "aks_subnets" {
     private = {
       id                          = module.aks_subnet["private"].subnet.id
       resource_group_name         = module.aks_subnet["private"].subnet.resource_group_name
-      address_prefixes            = subnet.aks_subnet["private"].address_prefixes
-      service_endpoints           = subnet.aks_subnet["private"].service_endpoints
+      address_prefixes            = module.aks_subnet["private"].address_prefixes
+      service_endpoints           = module.aks_subnet["private"].service_endpoints
       network_security_group_id   = module.aks_subnet["private"].subnet.nsg_id
       network_security_group_name = module.aks_subnet["private"].subnet.nsg_name
       virtual_network_name        = azurerm_virtual_network.vnet.name
@@ -63,8 +63,8 @@ output "aks_subnets" {
     }
     public = {
       id                          = module.aks_subnet["public"].subnet.id
-      address_prefixes            = subnet.aks_subnet["public"].address_prefixes
-      service_endpoints           = subnet.aks_subnet["public"].service_endpoints
+      address_prefixes            = module.aks_subnet["public"].address_prefixes
+      service_endpoints           = module.aks_subnet["public"].service_endpoints
       resource_group_name         = module.aks_subnet["public"].subnet.resource_group_name
       network_security_group_id   = module.aks_subnet["public"].subnet.nsg_id
       network_security_group_name = module.aks_subnet["public"].subnet.nsg_name
