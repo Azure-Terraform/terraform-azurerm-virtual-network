@@ -29,11 +29,12 @@ module "subnet" {
   service_endpoints = each.value.service_endpoints
   delegations       = each.value.delegations
 
-  configure_nsg_rules     = each.value.configure_nsg_rules
-  allow_internet_outbound = each.value.allow_internet_outbound
-  allow_lb_inbound        = each.value.allow_lb_inbound
-  allow_vnet_inbound      = each.value.allow_vnet_inbound
-  allow_vnet_outbound     = each.value.allow_vnet_outbound
+  create_network_security_group = each.value.create_network_security_group
+  configure_nsg_rules           = each.value.configure_nsg_rules
+  allow_internet_outbound       = each.value.allow_internet_outbound
+  allow_lb_inbound              = each.value.allow_lb_inbound
+  allow_vnet_inbound            = each.value.allow_vnet_inbound
+  allow_vnet_outbound           = each.value.allow_vnet_outbound
 }
 
 module "aks_subnet" {
@@ -45,11 +46,20 @@ module "aks_subnet" {
   location            = var.location
   tags                = var.tags
 
+  enforce_subnet_names = false
+
   virtual_network_name = azurerm_virtual_network.vnet.name
   subnet_type          = "aks-${each.key}"
   cidrs                = each.value.cidrs
 
+  enforce_private_link_endpoint_network_policies = each.value.enforce_private_link_endpoint_network_policies
+  enforce_private_link_service_network_policies  = each.value.enforce_private_link_service_network_policies
+
   service_endpoints = each.value.service_endpoints
+  delegations       = each.value.delegations
+
+  create_network_security_group = false
+  configure_nsg_rules           = false
 }
 
 resource "azurerm_route_table" "route_table" {
@@ -110,4 +120,3 @@ resource "azurerm_virtual_network_peering" "peer" {
   allow_gateway_transit        = each.value.allow_gateway_transit
   use_remote_gateways          = each.value.use_remote_gateways
 }
-
