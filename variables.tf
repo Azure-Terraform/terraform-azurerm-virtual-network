@@ -58,6 +58,16 @@ variable "subnets" {
   }
 }
 
+variable "aks_subnets" {
+  description = "AKS subnets"
+  type = object({
+    private     = map(any)
+    public      = map(any)
+    route_table = string
+  })
+  default = null
+}
+
 variable "subnet_defaults" {
   description = "Maps of CIDRs, policies, endpoints and delegations"
   type        = object({
@@ -69,6 +79,7 @@ variable "subnet_defaults" {
                                                                           name    = string
                                                                           actions = list(string)
                                                                        }))
+                  create_network_security_group                  = bool   # create/associate network security group with subnet
                   configure_nsg_rules                            = bool   # deny ingress/egress traffic and configure nsg rules based on below parameters
                   allow_internet_outbound                        = bool   # allow outbound traffic to internet (configure_nsg_rules must be set to true)
                   allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer (configure_nsg_rules must be set to true)
@@ -82,6 +93,7 @@ variable "subnet_defaults" {
                   enforce_private_link_service_network_policies  = false
                   service_endpoints                              = []
                   delegations                                    = {}
+                  create_network_security_group                  = true
                   configure_nsg_rules                            = true
                   allow_internet_outbound                        = false
                   allow_lb_inbound                               = false
@@ -101,22 +113,6 @@ variable "route_tables" {
                   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route
                 }))
   default     = {}
-}
-
-variable "aks_subnets" {
-  description = "AKS subnets"
-  type        = object({
-    private = object({
-      cidrs = list(string)
-      service_endpoints = list(string)
-    })
-    public = object({
-      cidrs = list(string)
-      service_endpoints = list(string)
-    })
-    route_table = string
-  })
-  default = null
 }
 
 variable "peers" {
