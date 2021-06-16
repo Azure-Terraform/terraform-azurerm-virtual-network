@@ -26,6 +26,7 @@ No requirements.
 | allow\_vnet\_outbound | allow all outbound from virtual network | `bool` | `false` | no |
 | cidrs | CIDRs for subnet | `list(string)` | n/a | yes |
 | configure\_nsg\_rules | Configure network security group rules | `bool` | `false` | no |
+| create\_network\_security\_group | Create/associate network security group | `bool` | `true` | no |
 | delegations | delegation blocks for services | <pre>map(object({<br>                  name    = string<br>                  actions = list(string)<br>                }))</pre> | `{}` | no |
 | enforce\_private\_link\_endpoint\_network\_policies | enable network policies for the private link endpoint on the subnet | `bool` | `false` | no |
 | enforce\_private\_link\_service\_network\_policies | enable network policies for the private link service on the subnet | `bool` | `false` | no |
