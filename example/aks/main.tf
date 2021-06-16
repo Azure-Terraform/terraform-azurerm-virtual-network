@@ -23,7 +23,7 @@ resource "random_string" "random" {
 }
 
 module "subscription" {
-  source = "github.com/Azure-Terraform/terraform-azurerm-subscription-data.git?ref=v1.0.0"
+  source          = "github.com/Azure-Terraform/terraform-azurerm-subscription-data.git?ref=v1.0.0"
   subscription_id = data.azurerm_subscription.current.subscription_id
 }
 
@@ -66,31 +66,29 @@ module "virtual_network" {
   names               = module.metadata.names
   tags                = module.metadata.tags
 
-  address_space = ["10.1.0.0/22"]
+  address_space        = ["10.1.0.0/22"]
+  enforce_subnet_names = false
 
   subnets = {
-    "iaas-public"   = { cidrs               = ["10.1.0.0/24"]
-                        allow_vnet_inbound  = true
-                        allow_vnet_outbound = true
-                      }
-    "iaas-private"   = { cidrs              = ["10.1.1.0/24"]
-                        allow_vnet_inbound  = true
-                        allow_vnet_outbound = true
-                      }
-    "iaas-outbound"   = { cidrs = ["10.1.2.0/24"]
-                        allow_vnet_inbound      = true
-                        allow_vnet_outbound     = true
-                      }
+    iaas-public = { cidrs = ["10.1.0.0/24"]
+      allow_vnet_inbound  = true
+      allow_vnet_outbound = true
+    }
+    iaas-private = { cidrs = ["10.1.1.0/24"]
+      allow_vnet_inbound  = true
+      allow_vnet_outbound = true
+    }
+    GatewaySubnet = { cidrs = ["10.1.2.0/24"]
+      create_network_security_group = false
+    }
   }
 
   aks_subnets = {
     private = {
       cidrs = ["10.1.3.0/25"]
-      service_endpoints = []
     }
     public = {
       cidrs = ["10.1.3.128/25"]
-      service_endpoints = []
     }
     route_table = "default"
   }
@@ -101,12 +99,12 @@ module "virtual_network" {
       use_inline_routes             = false
       routes = {
         internet = {
-          address_prefix         = "0.0.0.0/0"
-          next_hop_type          = "Internet"
+          address_prefix = "0.0.0.0/0"
+          next_hop_type  = "Internet"
         }
         local-vnet-10-1-0-0-22 = {
-          address_prefix         = "10.1.0.0/22"
-          next_hop_type          = "vnetlocal"
+          address_prefix = "10.1.0.0/22"
+          next_hop_type  = "vnetlocal"
         }
       }
     }

@@ -10,12 +10,12 @@ output "name" {
 
 output "nsg_id" {
   description = "network security group id"
-  value       = azurerm_network_security_group.nsg.id
+  value       = (var.create_network_security_group ? azurerm_network_security_group.nsg.0.id : null)
 }
 
 output "nsg_name" {
   description = "network security group name"
-  value       = azurerm_network_security_group.nsg.name
+  value       = (var.create_network_security_group ? azurerm_network_security_group.nsg.0.name : null)
 }
 
 output "subnet" {

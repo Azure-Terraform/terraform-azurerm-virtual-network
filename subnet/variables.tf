@@ -46,6 +46,12 @@ variable "cidrs" {
   type        = list(string)
 }
 
+variable "create_network_security_group" {
+  description = "Create/associate network security group"
+  type        = bool
+  default     = true
+}
+
 variable "configure_nsg_rules" {
   description = "Configure network security group rules"
   type        = bool

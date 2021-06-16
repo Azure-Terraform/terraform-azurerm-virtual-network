@@ -58,8 +58,51 @@ variable "subnets" {
   }
 }
 
+variable "aks_subnets" {
+  description = "AKS subnets"
+  type = object({
+    private     = map(any)
+    public      = map(any)
+    route_table = string
+  })
+  default = null
+}
+
 variable "subnet_defaults" {
   description = "Maps of CIDRs, policies, endpoints and delegations"
+<<<<<<< HEAD
+  type        = object({
+                  cidrs                                          = list(string)
+                  enforce_private_link_endpoint_network_policies = bool
+                  enforce_private_link_service_network_policies  = bool
+                  service_endpoints                              = list(string)
+                  delegations                                    = map(object({
+                                                                          name    = string
+                                                                          actions = list(string)
+                                                                       }))
+                  create_network_security_group                  = bool   # create/associate network security group with subnet
+                  configure_nsg_rules                            = bool   # deny ingress/egress traffic and configure nsg rules based on below parameters
+                  allow_internet_outbound                        = bool   # allow outbound traffic to internet (configure_nsg_rules must be set to true)
+                  allow_lb_inbound                               = bool   # allow inbound traffic from Azure Load Balancer (configure_nsg_rules must be set to true)
+                  allow_vnet_inbound                             = bool   # allow all inbound from virtual network (configure_nsg_rules must be set to true)
+                  allow_vnet_outbound                            = bool   # allow all outbound from virtual network (configure_nsg_rules must be set to true)
+                  route_table_association                        = string
+                })
+  default     = { 
+                  cidrs                                          = []
+                  enforce_private_link_endpoint_network_policies = false
+                  enforce_private_link_service_network_policies  = false
+                  service_endpoints                              = []
+                  delegations                                    = {}
+                  create_network_security_group                  = true
+                  configure_nsg_rules                            = true
+                  allow_internet_outbound                        = false
+                  allow_lb_inbound                               = false
+                  allow_vnet_inbound                             = false
+                  allow_vnet_outbound                            = false
+                  route_table_association                        = null
+                }
+=======
   type = object({
     cidrs                                          = list(string)
     enforce_private_link_endpoint_network_policies = bool
@@ -89,6 +132,7 @@ variable "subnet_defaults" {
     allow_vnet_outbound                            = false
     route_table_association                        = null
   }
+>>>>>>> master
 }
 
 variable "route_tables" {
@@ -103,6 +147,8 @@ variable "route_tables" {
   default = {}
 }
 
+<<<<<<< HEAD
+=======
 variable "aks_subnets" {
   description = "AKS subnets"
   type = object({
@@ -119,6 +165,7 @@ variable "aks_subnets" {
   default = null
 }
 
+>>>>>>> master
 variable "peers" {
   description = "Peer virtual networks.  Keys are names, allowed values are same as for peer_defaults. Id value is required."
   type        = any
