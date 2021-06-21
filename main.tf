@@ -103,7 +103,7 @@ module "aks_subnet" {
 }
 
 resource "azurerm_route_table" "aks_route_table" {
-  count          = (var.aks_subnets == null ? 0 : 1)
+  count = (var.aks_subnets == null ? 0 : 1)
 
   lifecycle {
     ignore_changes = [tags]
