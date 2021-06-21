@@ -60,7 +60,7 @@ output "aks_subnets" {
       network_security_group_name = module.aks_subnet["private"].nsg_name
       virtual_network_name        = azurerm_virtual_network.vnet.name
       virtual_network_id          = azurerm_virtual_network.vnet.id
-      route_table_id              = azurerm_route_table.route_table[var.aks_subnets.route_table].id
+      route_table_id              = azurerm_route_table.aks_route_table.0.id
     }
     public = {
       id                          = module.aks_subnet["public"].subnet.id
@@ -71,9 +71,9 @@ output "aks_subnets" {
       network_security_group_name = module.aks_subnet["public"].nsg_name
       virtual_network_name        = azurerm_virtual_network.vnet.name
       virtual_network_id          = azurerm_virtual_network.vnet.id
-      route_table_id              = azurerm_route_table.route_table[var.aks_subnets.route_table].id
+      route_table_id              = azurerm_route_table.aks_route_table.0.id
     }
-    route_table_id = azurerm_route_table.route_table[var.aks_subnets.route_table].id
+    route_table_id = azurerm_route_table.aks_route_table.0.id
   })
 }
 
