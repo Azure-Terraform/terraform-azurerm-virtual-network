@@ -15,7 +15,7 @@ output "subnet_nsg_ids" {
   description = "Map of subnet ids to associated network_security_group ids."
   value = zipmap(
     [for subnet in module.subnet : subnet.id],
-    [for subnet in module.subnet : subnet.nsg_id]
+    [for subnet in module.subnet : subnet.network_security_group_id]
   )
 }
 
@@ -23,7 +23,7 @@ output "subnet_nsg_names" {
   description = "Map of subnet names to associated network_security_group names."
   value = zipmap(
     [for subnet in module.subnet : subnet.name],
-    [for subnet in module.subnet : subnet.nsg_name]
+    [for subnet in module.subnet : subnet.network_security_group_name]
   )
 }
 
@@ -37,8 +37,8 @@ output "subnets" {
       resource_group_name         = subnet.subnet.resource_group_name
       address_prefixes            = subnet.subnet.address_prefixes
       service_endpoints           = subnet.subnet.service_endpoints
-      network_security_group_name = subnet.nsg_name
-      network_security_group_id   = subnet.nsg_id
+      network_security_group_name = subnet.network_sedurity_group_name
+      network_security_group_id   = subnet.network_security_group_id
       virtual_network_name        = azurerm_virtual_network.vnet.name
       virtual_network_id          = azurerm_virtual_network.vnet.id
       route_table_id = (contains(keys(local.route_table_associations), subnet.subnet.name) ?
@@ -57,8 +57,8 @@ output "aks" {
         resource_group_name         = module.aks_subnet["private"].subnet.resource_group_name
         address_prefixes            = module.aks_subnet["private"].subnet.address_prefixes
         service_endpoints           = module.aks_subnet["private"].subnet.service_endpoints
-        network_security_group_id   = module.aks_subnet["private"].nsg_id
-        network_security_group_name = module.aks_subnet["private"].nsg_name
+        network_security_group_id   = module.aks_subnet["private"].network_security_group_id
+        network_security_group_name = module.aks_subnet["private"].network_security_group_name
         virtual_network_name        = azurerm_virtual_network.vnet.name
         virtual_network_id          = azurerm_virtual_network.vnet.id
         route_table_id              = azurerm_route_table.aks_route_table.0.id
@@ -68,8 +68,8 @@ output "aks" {
         resource_group_name         = module.aks_subnet["public"].subnet.resource_group_name
         address_prefixes            = module.aks_subnet["public"].subnet.address_prefixes
         service_endpoints           = module.aks_subnet["public"].subnet.service_endpoints
-        network_security_group_id   = module.aks_subnet["public"].nsg_id
-        network_security_group_name = module.aks_subnet["public"].nsg_name
+        network_security_group_id   = module.aks_subnet["public"].network_security_group_id
+        network_security_group_name = module.aks_subnet["private"].network_security_group_name
         virtual_network_name        = azurerm_virtual_network.vnet.name
         virtual_network_id          = azurerm_virtual_network.vnet.id
         route_table_id              = azurerm_route_table.aks_route_table.0.id
