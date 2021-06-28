@@ -90,13 +90,8 @@ module "virtual_network" {
     public = {
       cidrs = ["10.1.3.128/25"]
     }
-    route_table = "default"
-  }
-
-  route_tables = {
-    default = {
+    route_table = {
       disable_bgp_route_propagation = true
-      use_inline_routes             = false
       routes = {
         internet = {
           address_prefix = "0.0.0.0/0"
