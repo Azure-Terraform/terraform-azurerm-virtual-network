@@ -46,8 +46,8 @@ No requirements.
 |------|-------------|
 | id | subnet id |
 | name | subnet name |
-| nsg\_id | network security group id |
-| nsg\_name | network security group name |
+| network\_security\_group\_id | network security group id |
+| network\_security\_group\_name | network security group name |
 | subnet | subnet data object |
 
 <!--- END_TF_DOCS --->
