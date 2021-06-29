@@ -37,7 +37,7 @@ output "subnets" {
       resource_group_name         = subnet.subnet.resource_group_name
       address_prefixes            = subnet.subnet.address_prefixes
       service_endpoints           = subnet.subnet.service_endpoints
-      network_security_group_name = subnet.network_sedurity_group_name
+      network_security_group_name = subnet.network_security_group_name
       network_security_group_id   = subnet.network_security_group_id
       virtual_network_name        = azurerm_virtual_network.vnet.name
       virtual_network_id          = azurerm_virtual_network.vnet.id
