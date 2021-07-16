@@ -60,7 +60,7 @@ variable "subnets" {
 
 variable "aks_subnets" {
   description = "AKS subnets"
-  type = object({
+  type = map(object({
     private = map(any)
     public  = map(any)
     route_table = object({
@@ -69,7 +69,7 @@ variable "aks_subnets" {
       # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)
       # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route
     })
-  })
+  }))
   default = null
 }
 

@@ -89,7 +89,7 @@ module "aks_subnet" {
   enforce_subnet_names = false
 
   virtual_network_name = azurerm_virtual_network.vnet.name
-  subnet_type          = "aks-${each.key}"
+  subnet_type          = each.key
   cidrs                = each.value.cidrs
 
   enforce_private_link_endpoint_network_policies = each.value.enforce_private_link_endpoint_network_policies
@@ -103,24 +103,24 @@ module "aks_subnet" {
 }
 
 resource "azurerm_route_table" "aks_route_table" {
-  count = (var.aks_subnets == null ? 0 : 1)
+  for_each = local.aks_route_tables
 
   lifecycle {
     ignore_changes = [tags]
   }
 
-  name                          = "${var.resource_group_name}-aks-routetable"
+  name                          = "${var.resource_group_name}-aks-${each.key}-routetable"
   location                      = var.location
   resource_group_name           = var.resource_group_name
-  disable_bgp_route_propagation = var.aks_subnets.route_table.disable_bgp_route_propagation
+  disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
 }
 
 resource "azurerm_route" "aks_route" {
-  for_each = (var.aks_subnets == null ? {} : var.aks_subnets.route_table.routes)
+  for_each = local.aks_routes
 
-  name                   = each.key
+  name                   = each.value.name
   resource_group_name    = var.resource_group_name
-  route_table_name       = azurerm_route_table.aks_route_table.0.name
+  route_table_name       = azurerm_route_table.aks_route_table[each.value.aks_id].name
   address_prefix         = each.value.address_prefix
   next_hop_type          = each.value.next_hop_type
   next_hop_in_ip_address = try(each.value.next_hop_in_ip_address, null)
@@ -131,7 +131,7 @@ resource "azurerm_subnet_route_table_association" "aks" {
   for_each   = local.aks_subnets
 
   subnet_id      = module.aks_subnet[each.key].id
-  route_table_id = azurerm_route_table.aks_route_table.0.id
+  route_table_id = azurerm_route_table.aks_route_table[each.value.aks_id].id
 }
 
 resource "azurerm_virtual_network_peering" "peer" {

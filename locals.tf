@@ -3,10 +3,6 @@ locals {
 
   subnets = zipmap(keys(var.subnets), [for subnet in values(var.subnets) : merge(var.subnet_defaults, subnet)])
 
-  aks_subnets = (var.aks_subnets == null ? {} : {
-    private = merge(var.subnet_defaults, var.aks_subnets.private)
-    public  = merge(var.subnet_defaults, var.aks_subnets.public)
-  })
   route_table_associations = { for i, z in local.subnets : i => z.route_table_association if z.route_table_association != null }
 
   peers = zipmap(keys(var.peers), [for peer in values(var.peers) : merge(var.peer_defaults, peer)])
@@ -18,4 +14,24 @@ locals {
       }, { "table" = route_table, name = route })
     }
   })...)
+
+  aks_info = (var.aks_subnets == null ? {} : var.aks_subnets)
+
+  aks_subnets = merge([for id in keys(local.aks_info): 
+    {
+      "aks-${id}-private" = merge({aks_id = id}, merge(var.subnet_defaults, local.aks_info[id].private) )
+      "aks-${id}-public"  = merge({aks_id = id}, merge(var.subnet_defaults, local.aks_info[id].public) )
+    }
+  ]...)
+
+  aks_route_tables = { for id,info in local.aks_info: 
+    id => local.aks_info[id].route_table
+  }
+
+  aks_routes = merge([ for id,route_table in local.aks_route_tables:
+    { for desc,info in route_table.routes:
+      "${id}-${desc}" => merge({ aks_id = id, name = desc }, info)
+    }
+  ]...)
+
 }

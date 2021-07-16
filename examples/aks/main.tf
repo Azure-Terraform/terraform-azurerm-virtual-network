@@ -2,10 +2,10 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.57"
+      version = "~> 2.67"
     }
   }
-  required_version = "~> 0.15.0"
+  required_version = "~> 1.0"
 }
 
 provider "azurerm" {
@@ -66,7 +66,7 @@ module "virtual_network" {
   names               = module.metadata.names
   tags                = module.metadata.tags
 
-  address_space        = ["10.1.0.0/22"]
+  address_space        = ["10.1.0.0/21"]
   enforce_subnet_names = false
 
   subnets = {
@@ -84,22 +84,45 @@ module "virtual_network" {
   }
 
   aks_subnets = {
-    private = {
-      cidrs = ["10.1.3.0/25"]
-    }
-    public = {
-      cidrs = ["10.1.3.128/25"]
-    }
-    route_table = {
-      disable_bgp_route_propagation = true
-      routes = {
-        internet = {
-          address_prefix = "0.0.0.0/0"
-          next_hop_type  = "Internet"
+    kubenet = {
+      private = {
+        cidrs = ["10.1.3.0/25"]
+      }
+      public = {
+        cidrs = ["10.1.3.128/25"]
+      }
+      route_table = {
+        disable_bgp_route_propagation = true
+        routes = {
+          internet = {
+            address_prefix = "0.0.0.0/0"
+            next_hop_type  = "Internet"
+          }
+          local-vnet-10-1-0-0-21 = {
+            address_prefix = "10.1.0.0/21"
+            next_hop_type  = "vnetlocal"
+          }
         }
-        local-vnet-10-1-0-0-22 = {
-          address_prefix = "10.1.0.0/22"
-          next_hop_type  = "vnetlocal"
+      }
+    }
+    azurecni = {
+      private = {
+        cidrs = ["10.1.4.0/24"]
+      }
+      public = {
+        cidrs = ["10.1.5.0/24"]
+      }
+      route_table = {
+        disable_bgp_route_propagation = true
+        routes = {
+          internet = {
+            address_prefix = "0.0.0.0/0"
+            next_hop_type  = "Internet"
+          }
+          local-vnet-10-1-0-0-21 = {
+            address_prefix = "10.1.0.0/21"
+            next_hop_type  = "vnetlocal"
+          }
         }
       }
     }
