@@ -28,7 +28,7 @@ service-market-environment-location-product
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | address\_space | CIDRs for virtual network | `list(string)` | n/a | yes |
-| aks\_subnets | AKS subnets | <pre>object({<br>    private = map(any)<br>    public  = map(any)<br>    route_table = object({<br>      disable_bgp_route_propagation = bool<br>      routes                        = map(map(string))<br>      # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)<br>      # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route<br>    })<br>  })</pre> | `null` | no |
+| aks\_subnets | AKS subnets | <pre>map(object({<br>    private = map(any)<br>    public  = map(any)<br>    route_table = object({<br>      disable_bgp_route_propagation = bool<br>      routes                        = map(map(string))<br>      # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)<br>      # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route<br>    })<br>  }))</pre> | `null` | no |
 | dns\_servers | If applicable, a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver | `list(string)` | `null` | no |
 | enforce\_subnet\_names | enforce subnet names based on naming\_rules variable | `bool` | `true` | no |
 | location | Azure Region | `string` | n/a | yes |
