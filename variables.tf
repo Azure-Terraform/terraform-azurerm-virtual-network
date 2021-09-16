@@ -61,8 +61,8 @@ variable "subnets" {
 variable "aks_subnets" {
   description = "AKS subnets"
   type = map(object({
-    private = map(any)
-    public  = map(any)
+    private = any
+    public  = any
     route_table = object({
       disable_bgp_route_propagation = bool
       routes                        = map(map(string))
