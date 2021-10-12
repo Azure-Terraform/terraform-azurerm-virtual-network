@@ -37,13 +37,13 @@ variable "address_space" {
 }
 
 variable "dns_servers" {
-  description = "If applicable, a list of custom DNS servers to use inside your virtual network instead of the Azure-provided resolver"
+  description = "If applicable, a list of custom DNS servers to use inside your virtual network.  Unset will use default Azure-provided resolver"
   type        = list(string)
   default     = null
 }
 
 variable "subnets" {
-  description = "Map of subnets. Keys are subnet names, Allowed values are the same as for subnet_defaults."
+  description = "Map of subnets. Keys are subnet names, Allowed values are the same as for subnet_defaults"
   type        = any
   default     = {}
 
