@@ -146,3 +146,20 @@ resource "azurerm_virtual_network_peering" "peer" {
   allow_gateway_transit        = each.value.allow_gateway_transit
   use_remote_gateways          = each.value.use_remote_gateways
 }
+
+resource "azurerm_private_dns_zone" "zones" {
+  for_each = toset(var.private_dns_zones)
+
+  name                = each.key
+  resource_group_name = var.resource_group_name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "links" {
+  for_each = toset(var.private_dns_zones)
+
+  name                  = each.key
+  resource_group_name   = var.resource_group_name
+  private_dns_zone_name = azurerm_private_dns_zone.zones[each.key].name
+  virtual_network_id    = azurerm_virtual_network.vnet.id
+  registration_enabled  = false
+}

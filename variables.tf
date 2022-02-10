@@ -143,3 +143,9 @@ variable "peer_defaults" {
     use_remote_gateways          = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#use_remote_gateways
   }
 }
+
+variable "private_dns_zones" {
+  description = "A list of private dns zones to create"
+  type        = list(string)
+  default     = []
+}
