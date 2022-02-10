@@ -50,7 +50,7 @@ output "subnets" {
 
 output "aks" {
   description = "Virtual network information matching AKS module input."
-  value = { for aks_id,info in local.aks_info:
+  value = { for aks_id, info in local.aks_info :
     aks_id => {
       subnets = {
         private = {
@@ -90,4 +90,15 @@ output "route_tables" {
       subnets = azurerm_route_table.route_table[k].subnets
     }
   }
+}
+
+output "private_dns_zones" {
+  description = "Maps of private dns zones"
+  value = zipmap(
+    [for zone in azurerm_private_dns_zone.zones : zone.name],
+    [for zone in azurerm_private_dns_zone.zones : {
+      name = zone.name
+      id   = zone.id
+    }]
+  )
 }

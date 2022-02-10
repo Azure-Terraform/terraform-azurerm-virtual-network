@@ -17,19 +17,19 @@ locals {
 
   aks_info = (var.aks_subnets == null ? {} : var.aks_subnets)
 
-  aks_subnets = merge([for id in keys(local.aks_info): 
+  aks_subnets = merge([for id in keys(local.aks_info) :
     {
-      "aks-${id}-private" = merge({aks_id = id}, merge(var.subnet_defaults, local.aks_info[id].private) )
-      "aks-${id}-public"  = merge({aks_id = id}, merge(var.subnet_defaults, local.aks_info[id].public) )
+      "aks-${id}-private" = merge({ aks_id = id }, merge(var.subnet_defaults, local.aks_info[id].private))
+      "aks-${id}-public"  = merge({ aks_id = id }, merge(var.subnet_defaults, local.aks_info[id].public))
     }
   ]...)
 
-  aks_route_tables = { for id,info in local.aks_info: 
+  aks_route_tables = { for id, info in local.aks_info :
     id => local.aks_info[id].route_table
   }
 
-  aks_routes = merge([ for id,route_table in local.aks_route_tables:
-    { for desc,info in route_table.routes:
+  aks_routes = merge([for id, route_table in local.aks_route_tables :
+    { for desc, info in route_table.routes :
       "${id}-${desc}" => merge({ aks_id = id, name = desc }, info)
     }
   ]...)
