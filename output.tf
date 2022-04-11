@@ -54,6 +54,7 @@ output "aks" {
     aks_id => {
       subnets = {
         private = {
+          name                        = module.aks_subnet["aks-${aks_id}-private"].subnet.name
           id                          = module.aks_subnet["aks-${aks_id}-private"].subnet.id
           resource_group_name         = module.aks_subnet["aks-${aks_id}-private"].subnet.resource_group_name
           address_prefixes            = module.aks_subnet["aks-${aks_id}-private"].subnet.address_prefixes
@@ -65,6 +66,7 @@ output "aks" {
           route_table_id              = azurerm_route_table.aks_route_table[aks_id].id
         }
         public = {
+          name                        = module.aks_subnet["aks-${aks_id}-public"].subnet.name
           id                          = module.aks_subnet["aks-${aks_id}-public"].subnet.id
           resource_group_name         = module.aks_subnet["aks-${aks_id}-public"].subnet.resource_group_name
           address_prefixes            = module.aks_subnet["aks-${aks_id}-public"].subnet.address_prefixes
