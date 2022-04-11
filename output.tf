@@ -79,6 +79,7 @@ output "aks" {
         }
       }
       route_table_id = azurerm_route_table.aks_route_table[aks_id].id
+      route_table_name = azurerm_route_table.aks_route_table[aks_id].name
     }
   }
 }
