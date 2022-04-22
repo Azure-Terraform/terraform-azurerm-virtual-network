@@ -70,15 +70,15 @@ module "virtual_network" {
   enforce_subnet_names = false
 
   subnets = {
-    iaas-public = { cidrs = ["10.1.0.0/24"]
+    iaas-public = { cidrs = ["10.1.0.0/25"]
       allow_vnet_inbound  = true
       allow_vnet_outbound = true
     }
-    iaas-private = { cidrs = ["10.1.1.0/24"]
+    iaas-private = { cidrs = ["10.1.0.128/25"]
       allow_vnet_inbound  = true
       allow_vnet_outbound = true
     }
-    GatewaySubnet = { cidrs = ["10.1.2.0/24"]
+    GatewaySubnet = { cidrs = ["10.1.1.0/24"]
       create_network_security_group = false
     }
   }
@@ -86,10 +86,7 @@ module "virtual_network" {
   aks_subnets = {
     kubenet = {
       private = {
-        cidrs = ["10.1.3.0/25"]
-      }
-      public = {
-        cidrs = ["10.1.3.128/25"]
+        cidrs = ["10.1.2.0/24"]
       }
       route_table = {
         disable_bgp_route_propagation = true
@@ -107,10 +104,7 @@ module "virtual_network" {
     }
     azurecni = {
       private = {
-        cidrs = ["10.1.4.0/24"]
-      }
-      public = {
-        cidrs = ["10.1.5.0/24"]
+        cidrs = ["10.1.3.0/24"]
       }
       route_table = {
         disable_bgp_route_propagation = true
