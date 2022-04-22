@@ -85,7 +85,7 @@ module "virtual_network" {
 
   aks_subnets = {
     kubenet = {
-      private = {
+      subnet_info = {
         cidrs = ["10.1.2.0/24"]
       }
       route_table = {
@@ -103,7 +103,7 @@ module "virtual_network" {
       }
     }
     azurecni = {
-      private = {
+      subnet_info = {
         cidrs = ["10.1.3.0/24"]
       }
       route_table = {
