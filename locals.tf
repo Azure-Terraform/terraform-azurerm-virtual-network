@@ -19,7 +19,7 @@ locals {
 
   aks_subnets = merge([for id in keys(local.aks_info): 
     {
-      "aks-${id}-private" = merge({aks_id = id}, merge(var.subnet_defaults, local.aks_info[id].private) )
+      "aks-${id}" = merge({aks_id = id}, merge(var.subnet_defaults, local.aks_info[id].subnet_info) )
     }
   ]...)
 
