@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.67"
+      version = "~> 2.99"
     }
   }
   required_version = "~> 1.0"
@@ -97,7 +97,7 @@ module "virtual_network" {
           }
           local-vnet-10-1-0-0-21 = {
             address_prefix = "10.1.0.0/21"
-            next_hop_type  = "vnetlocal"
+            next_hop_type  = "VnetLocal"
           }
         }
       }
@@ -115,7 +115,7 @@ module "virtual_network" {
           }
           local-vnet-10-1-0-0-21 = {
             address_prefix = "10.1.0.0/21"
-            next_hop_type  = "vnetlocal"
+            next_hop_type  = "VnetLocal"
           }
         }
       }

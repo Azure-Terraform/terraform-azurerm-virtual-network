@@ -50,7 +50,7 @@ output "subnets" {
 
 output "aks" {
   description = "Virtual network information matching AKS module input."
-  value = { for aks_id,info in local.aks_info:
+  value = { for aks_id, info in local.aks_info :
     aks_id => {
       subnet = {
         name                        = module.aks_subnet["aks-${aks_id}"].subnet.name
@@ -64,8 +64,10 @@ output "aks" {
         virtual_network_id          = azurerm_virtual_network.vnet.id
         route_table_id              = azurerm_route_table.aks_route_table[aks_id].id
       }
-      route_table_id = azurerm_route_table.aks_route_table[aks_id].id
-      route_table_name = azurerm_route_table.aks_route_table[aks_id].name
+      route_table = {
+        id   = azurerm_route_table.aks_route_table[aks_id].id
+        name = azurerm_route_table.aks_route_table[aks_id].name
+      }
     }
   }
 }
