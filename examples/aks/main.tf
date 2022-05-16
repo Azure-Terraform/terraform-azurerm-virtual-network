@@ -131,7 +131,7 @@ module "virtual_network" {
             next_hop_in_ip_address = var.firewall_ip_eastus
           }
           local-vnet-aks = {
-            address_prefix = ""10.0.0.0/24"
+            address_prefix = "10.0.0.0/24"
             next_hop_type  = "VnetLocal"
           }
         }
