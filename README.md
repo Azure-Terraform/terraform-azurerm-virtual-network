@@ -15,13 +15,13 @@ service-market-environment-location-product
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13.0 |
-| azurerm | >= 2.0.0 |
+| azurerm | >= 3.18.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | >= 2.0.0 |
+| azurerm | >= 3.18.0 |
 
 ## Inputs
 
