@@ -75,10 +75,10 @@ variable "aks_subnets" {
 variable "subnet_defaults" {
   description = "Maps of CIDRs, policies, endpoints and delegations"
   type = object({
-    cidrs                                          = list(string)
-    enforce_private_link_endpoint_network_policies = bool
-    enforce_private_link_service_network_policies  = bool
-    service_endpoints                              = list(string)
+    cidrs                                         = list(string)
+    private_endpoint_network_policies_enabled     = bool
+    private_link_service_network_policies_enabled = bool
+    service_endpoints                             = list(string)
     delegations = map(object({
       name    = string
       actions = list(string)
@@ -92,18 +92,18 @@ variable "subnet_defaults" {
     route_table_association       = string
   })
   default = {
-    cidrs                                          = []
-    enforce_private_link_endpoint_network_policies = false
-    enforce_private_link_service_network_policies  = false
-    service_endpoints                              = []
-    delegations                                    = {}
-    create_network_security_group                  = true
-    configure_nsg_rules                            = true
-    allow_internet_outbound                        = false
-    allow_lb_inbound                               = false
-    allow_vnet_inbound                             = false
-    allow_vnet_outbound                            = false
-    route_table_association                        = null
+    cidrs                                         = []
+    private_endpoint_network_policies_enabled     = true
+    private_link_service_network_policies_enabled = true
+    service_endpoints                             = []
+    delegations                                   = {}
+    create_network_security_group                 = true
+    configure_nsg_rules                           = true
+    allow_internet_outbound                       = false
+    allow_lb_inbound                              = false
+    allow_vnet_inbound                            = false
+    allow_vnet_outbound                           = false
+    route_table_association                       = null
   }
 }
 
