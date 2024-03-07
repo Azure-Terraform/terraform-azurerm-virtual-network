@@ -28,12 +28,12 @@ No requirements.
 | configure\_nsg\_rules | Configure network security group rules | `bool` | `false` | no |
 | create\_network\_security\_group | Create/associate network security group | `bool` | `true` | no |
 | delegations | delegation blocks for services | <pre>map(object({<br>                  name    = string<br>                  actions = list(string)<br>                }))</pre> | `{}` | no |
-| enforce\_private\_link\_endpoint\_network\_policies | enable network policies for the private link endpoint on the subnet | `bool` | `false` | no |
-| enforce\_private\_link\_service\_network\_policies | enable network policies for the private link service on the subnet | `bool` | `false` | no |
 | enforce\_subnet\_names | enforce subnet naming rules | `bool` | `false` | no |
 | location | Azure Region | `string` | n/a | yes |
 | names | names to be applied to resources | `map(string)` | n/a | yes |
 | naming\_rules | naming conventions yaml file | `string` | `""` | no |
+| private\_endpoint\_network\_policies\_enabled | Enable or Disable network policies for the private endpoint on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. | `bool` | `true` | no |
+| private\_link\_service\_network\_policies\_enabled | Enable or Disable network policies for the private link service on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. | `bool` | `true` | no |
 | resource\_group\_name | Resource group name | `string` | n/a | yes |
 | service\_endpoints | service endpoints to associate with the subnet | `list(string)` | `[]` | no |
 | subnet\_type | subnet type | `string` | n/a | yes |
