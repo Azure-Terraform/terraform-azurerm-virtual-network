@@ -1,15 +1,22 @@
 name: Generate terraform docs
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
       with:
-        ref: ${{ github.event.pull_request.head.ref }}
+        ref: ${{ github.ref }}
 
     - name: Module
-      uses: Dirrk/terraform-docs@v1.0.8
+      uses: terraform-docs/gh-actions@7a62208a0090636af2df1b739da46d27fd90bdc6 # v1.1.0
       with:
         tf_docs_working_dir: .
         tf_docs_output_file: README.md
@@ -17,7 +24,7 @@ jobs:
         tf_docs_git_push: 'true'
 
     - name: Submodule
-      uses: Dirrk/terraform-docs@v1.0.8
+      uses: terraform-docs/gh-actions@7a62208a0090636af2df1b739da46d27fd90bdc6 # v1.1.0
       with:
         tf_docs_working_dir: ./subnet/
         tf_docs_output_file: README.md
