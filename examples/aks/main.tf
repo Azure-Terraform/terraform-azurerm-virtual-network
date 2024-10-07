@@ -2,10 +2,10 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.99"
+      version = "~> 4.0.0"
     }
   }
-  required_version = "~> 1.0"
+  required_version = "~> 1.5"
 }
 
 provider "azurerm" {
@@ -89,7 +89,7 @@ module "virtual_network" {
         cidrs = ["10.1.2.0/24"]
       }
       route_table = {
-        disable_bgp_route_propagation = true
+        bgp_route_propagation_enabled = true
         routes = {
           internet = {
             address_prefix = "0.0.0.0/0"
@@ -107,7 +107,7 @@ module "virtual_network" {
         cidrs = ["10.1.3.0/24"]
       }
       route_table = {
-        disable_bgp_route_propagation = true
+        bgp_route_propagation_enabled = true
         routes = {
           internet = {
             address_prefix = "0.0.0.0/0"

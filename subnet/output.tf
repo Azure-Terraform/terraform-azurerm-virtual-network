@@ -4,8 +4,8 @@ output "id" {
 }
 
 output "name" {
-  description  = "subnet name"
-  value        = azurerm_subnet.subnet.name
+  description = "subnet name"
+  value       = azurerm_subnet.subnet.name
 }
 
 output "network_security_group_id" {

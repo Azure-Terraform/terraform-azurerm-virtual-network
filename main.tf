@@ -23,7 +23,7 @@ module "subnet" {
   subnet_type          = each.key
   cidrs                = each.value.cidrs
 
-  private_endpoint_network_policies_enabled     = each.value.private_endpoint_network_policies_enabled
+  private_endpoint_network_policies             = each.value.private_endpoint_network_policies
   private_link_service_network_policies_enabled = each.value.private_link_service_network_policies_enabled
 
   service_endpoints = each.value.service_endpoints
@@ -43,7 +43,7 @@ resource "azurerm_route_table" "route_table" {
   name                          = "${var.resource_group_name}-${each.key}-routetable"
   location                      = var.location
   resource_group_name           = var.resource_group_name
-  disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
+  bgp_route_propagation_enabled = each.value.bgp_route_propagation_enabled
 
   dynamic "route" {
     for_each = (each.value.use_inline_routes ? each.value.routes : {})
@@ -92,7 +92,8 @@ module "aks_subnet" {
   subnet_type          = each.key
   cidrs                = each.value.cidrs
 
-  private_endpoint_network_policies_enabled     = each.value.private_endpoint_network_policies_enabled
+  #private_endpoint_network_policies_enabled     = each.value.private_endpoint_network_policies_enabled
+  private_endpoint_network_policies             = each.value.private_endpoint_network_policies
   private_link_service_network_policies_enabled = each.value.private_link_service_network_policies_enabled
 
   service_endpoints = each.value.service_endpoints
@@ -109,10 +110,11 @@ resource "azurerm_route_table" "aks_route_table" {
     ignore_changes = [tags]
   }
 
-  name                          = "${var.resource_group_name}-aks-${each.key}-routetable"
-  location                      = var.location
-  resource_group_name           = var.resource_group_name
-  disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
+  name                = "${var.resource_group_name}-aks-${each.key}-routetable"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  #disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
+  bgp_route_propagation_enabled = false
 }
 
 resource "azurerm_route" "aks_route" {

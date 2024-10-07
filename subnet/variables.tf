@@ -1,4 +1,4 @@
-variable "resource_group_name"{
+variable "resource_group_name" {
   description = "Resource group name"
   type        = string
 }
@@ -83,10 +83,10 @@ variable "allow_vnet_outbound" {
 }
 
 # Subnet Options
-variable "private_endpoint_network_policies_enabled" {
+variable "private_endpoint_network_policies" {
   description = "Enable or Disable network policies for the private endpoint on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy."
-  type        = bool
-  default     = true
+  type        = string
+  default     = "Disabled"
 }
 
 variable "private_link_service_network_policies_enabled" {
@@ -103,9 +103,9 @@ variable "service_endpoints" {
 
 variable "delegations" {
   description = "delegation blocks for services"
-  type        = map(object({
-                  name    = string
-                  actions = list(string)
-                }))
-  default     = {}
+  type = map(object({
+    name    = string
+    actions = list(string)
+  }))
+  default = {}
 }

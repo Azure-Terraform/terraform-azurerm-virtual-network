@@ -63,7 +63,7 @@ variable "aks_subnets" {
   type = map(object({
     subnet_info = any
     route_table = object({
-      disable_bgp_route_propagation = bool
+      bgp_route_propagation_enabled = bool
       routes                        = map(map(string))
       # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)
       # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route
@@ -76,7 +76,7 @@ variable "subnet_defaults" {
   description = "Maps of CIDRs, policies, endpoints and delegations"
   type = object({
     cidrs                                         = list(string)
-    private_endpoint_network_policies_enabled     = bool
+    private_endpoint_network_policies             = string
     private_link_service_network_policies_enabled = bool
     service_endpoints                             = list(string)
     delegations = map(object({
@@ -93,7 +93,7 @@ variable "subnet_defaults" {
   })
   default = {
     cidrs                                         = []
-    private_endpoint_network_policies_enabled     = true
+    private_endpoint_network_policies             = "Disabled"
     private_link_service_network_policies_enabled = true
     service_endpoints                             = []
     delegations                                   = {}
@@ -110,7 +110,7 @@ variable "subnet_defaults" {
 variable "route_tables" {
   description = "Maps of route tables"
   type = map(object({
-    disable_bgp_route_propagation = bool
+    bgp_route_propagation_enabled = bool
     use_inline_routes             = bool # Setting to true will revert any external route additions.
     routes                        = map(map(string))
     # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)
