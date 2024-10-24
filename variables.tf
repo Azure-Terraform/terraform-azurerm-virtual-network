@@ -24,6 +24,11 @@ variable "naming_rules" {
   default     = ""
 }
 
+variable "vnet_name" {
+  description = "Name of the virtual network"
+  type        = string
+}
+
 variable "enforce_subnet_names" {
   description = "enforce subnet names based on naming_rules variable"
   type        = bool
