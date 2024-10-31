@@ -2,10 +2,10 @@ name: Generate terraform docs
 on:
   pull_request:
     branches:
-      - main
+      - master
   push:
     branches:
-      - main
+      - master
 
 jobs:
   docs:
