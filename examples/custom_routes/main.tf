@@ -86,7 +86,7 @@ module "virtual_network" {
 
   route_tables = {
     default = {
-      bgp_route_propagation_enabled = true
+      bgp_route_propagation_enabled = false
       use_inline_routes             = false
       routes = {
         internet = {
