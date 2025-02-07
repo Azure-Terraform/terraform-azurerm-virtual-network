@@ -36,3 +36,10 @@ updates:
       prefix: deps
     schedule:
       interval: daily
+
+  - package-ecosystem: docker
+    directory: /templates
+    commit-message:
+      prefix: deps
+    schedule:
+      interval: daily
