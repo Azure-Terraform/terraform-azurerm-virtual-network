@@ -66,27 +66,14 @@ module "virtual_network" {
   names               = module.metadata.names
   tags                = module.metadata.tags
 
-  address_space        = ["10.1.0.0/21"]
+  address_space        = ["10.0.0.0/24"]
+  dns_servers          = [var.firewall_ip_eastus]
   enforce_subnet_names = false
 
-  subnets = {
-    iaas-public = { cidrs = ["10.1.0.0/25"]
-      allow_vnet_inbound  = true
-      allow_vnet_outbound = true
-    }
-    iaas-private = { cidrs = ["10.1.0.128/25"]
-      allow_vnet_inbound  = true
-      allow_vnet_outbound = true
-    }
-    GatewaySubnet = { cidrs = ["10.1.1.0/24"]
-      create_network_security_group = false
-    }
-  }
-
   aks_subnets = {
-    kubenet = {
+    private = {  # subnet name
       subnet_info = {
-        cidrs = ["10.1.2.0/24"]
+        cidrs = ["10.0.0.0/25"]
       }
       route_table = {
         bgp_route_propagation_enabled = false
@@ -95,16 +82,31 @@ module "virtual_network" {
             address_prefix = "0.0.0.0/0"
             next_hop_type  = "Internet"
           }
-          local-vnet-10-1-0-0-21 = {
-            address_prefix = "10.1.0.0/21"
+          internal-1-aks = {
+            address_prefix         = "redacted"
+            next_hop_type          = "VirtualAppliance"
+            next_hop_in_ip_address = var.firewall_ip_eastus
+          }
+          internal-2-aks = {
+            address_prefix         = "redacted"
+            next_hop_type          = "VirtualAppliance"
+            next_hop_in_ip_address = var.firewall_ip_eastus
+          }
+          internal-3-aks = {
+            address_prefix         = "redacted"
+            next_hop_type          = "VirtualAppliance"
+            next_hop_in_ip_address = var.firewall_ip_eastus
+          }
+          local-vnet-aks = {
+            address_prefix = "10.0.0.0/24"
             next_hop_type  = "VnetLocal"
           }
         }
       }
     }
-    azurecni = {
+    public = {  # subnet name
       subnet_info = {
-        cidrs = ["10.1.3.0/24"]
+        cidrs = ["10.0.0.128/25"]
       }
       route_table = {
         bgp_route_propagation_enabled = false
@@ -113,8 +115,23 @@ module "virtual_network" {
             address_prefix = "0.0.0.0/0"
             next_hop_type  = "Internet"
           }
-          local-vnet-10-1-0-0-21 = {
-            address_prefix = "10.1.0.0/21"
+          internal-1-aks = {
+            address_prefix         = "redacted"
+            next_hop_type          = "VirtualAppliance"
+            next_hop_in_ip_address = var.firewall_ip_eastus
+          }
+          internal-2-aks = {
+            address_prefix         = "redacted"
+            next_hop_type          = "VirtualAppliance"
+            next_hop_in_ip_address = var.firewall_ip_eastus
+          }
+          internal-3-aks = {
+            address_prefix         = "redacted"
+            next_hop_type          = "VirtualAppliance"
+            next_hop_in_ip_address = var.firewall_ip_eastus
+          }
+          local-vnet-aks = {
+            address_prefix = "10.0.0.0/24"
             next_hop_type  = "VnetLocal"
           }
         }
