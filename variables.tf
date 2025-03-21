@@ -72,6 +72,12 @@ variable "aks_subnets" {
   default = null
 }
 
+variable "include_aks_prefix" {
+  description = "Whether to include the 'aks-' prefix for aks_subnets."
+  type        = bool
+  default     = true
+}
+
 variable "subnet_defaults" {
   description = "Maps of CIDRs, policies, endpoints and delegations"
   type = object({
