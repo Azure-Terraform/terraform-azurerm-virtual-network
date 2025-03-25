@@ -24,7 +24,7 @@ locals {
   ]...)
 
   aks_route_tables = { for id, info in local.aks_info :
-    (startswith(id, "aks-") ? id : "aks-${id}") => local.aks_info[id].route_table
+    id => local.aks_info[id].route_table
   }
 
   aks_routes = merge([for id, route_table in local.aks_route_tables :
