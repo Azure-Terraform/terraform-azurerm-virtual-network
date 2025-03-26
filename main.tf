@@ -110,7 +110,8 @@ resource "azurerm_route_table" "aks_route_table" {
     ignore_changes = [tags]
   }
 
-  name                = "${var.resource_group_name}-aks-${each.key}-routetable"
+  name                = format("%s-%s-routetable", var.resource_group_name, (startswith(each.key, "aks-") ? each.key : "aks-${each.key}"))
+  # name                = "${var.resource_group_name}-aks-${each.key}-routetable"
   location            = var.location
   resource_group_name = var.resource_group_name
   #disable_bgp_route_propagation = each.value.disable_bgp_route_propagation
