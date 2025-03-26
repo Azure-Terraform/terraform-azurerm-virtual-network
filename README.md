@@ -31,7 +31,6 @@ service-market-environment-location-product
 | aks\_subnets | AKS subnets | <pre>map(object({<br>    subnet_info = any<br>    route_table = object({<br>      bgp_route_propagation_enabled = bool<br>      routes                        = map(map(string))<br>      # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)<br>      # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route<br>    })<br>  }))</pre> | `null` | no |
 | dns\_servers | If applicable, a list of custom DNS servers to use inside your virtual network.  Unset will use default Azure-provided resolver | `list(string)` | `null` | no |
 | enforce\_subnet\_names | enforce subnet names based on naming\_rules variable | `bool` | `true` | no |
-| include\_aks\_prefix | Whether to include the 'aks-' prefix for aks\_subnets. | `bool` | `true` | no |
 | location | Azure Region | `string` | n/a | yes |
 | names | Names to be applied to resources | `map(string)` | n/a | yes |
 | naming\_rules | naming conventions yaml file | `string` | `""` | no |
