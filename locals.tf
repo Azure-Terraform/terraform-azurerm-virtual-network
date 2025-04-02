@@ -33,4 +33,5 @@ locals {
     }
   ]...)
 
+  environment_safe  = lower(join("-", var.environment == "" ? [] : [var.environment]))
 }
