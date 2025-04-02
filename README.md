@@ -103,7 +103,6 @@ For a full list of details provided in the output please view:<br />
 | <a name="input_aks_subnets"></a> [aks\_subnets](#input\_aks\_subnets) | AKS subnets | <pre>map(object({<br/>    subnet_info = any<br/>    route_table = object({<br/>      bgp_route_propagation_enabled = bool<br/>      routes                        = map(map(string))<br/>      # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)<br/>      # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route<br/>    })<br/>  }))</pre> | `null` | no |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | If applicable, a list of custom DNS servers to use inside your virtual network.  Unset will use default Azure-provided resolver | `list(string)` | `null` | no |
 | <a name="input_enforce_subnet_names"></a> [enforce\_subnet\_names](#input\_enforce\_subnet\_names) | enforce subnet names based on naming\_rules variable | `bool` | `true` | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment blue, green, ctest etc | `string` | `""` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure Region | `string` | n/a | yes |
 | <a name="input_names"></a> [names](#input\_names) | Names to be applied to resources | `map(string)` | n/a | yes |
 | <a name="input_naming_rules"></a> [naming\_rules](#input\_naming\_rules) | naming conventions yaml file | `string` | `""` | no |
