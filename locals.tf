@@ -32,6 +32,4 @@ locals {
       "${id}-${desc}" => merge({ aks_id = id, name = desc }, info)
     }
   ]...)
-
-  environment_safe  = lower(join("-", var.environment == "" ? [] : [var.environment]))
 }
