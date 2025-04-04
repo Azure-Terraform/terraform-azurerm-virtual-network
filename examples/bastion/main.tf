@@ -13,7 +13,7 @@ provider "azurerm" {
 }
 
 locals {
-  hosts       = toset(["bastion", "private"])
+  hosts = toset(["bastion", "private"])
   access_list = {
     my_ip = "${chomp(data.http.my_ip.body)}/32"
   }
@@ -26,15 +26,15 @@ resource "random_string" "random" {
 }
 
 resource "tls_private_key" "ssh_keys" {
-  for_each    = local.hosts
-  algorithm   = "RSA"
+  for_each  = local.hosts
+  algorithm = "RSA"
 }
 
 resource "local_file" "pem_files" {
-    for_each        = local.hosts
-    content         = tls_private_key.ssh_keys[each.value].private_key_pem
-    filename        = "${path.module}/${each.value}.pem"
-    file_permission = "0600" 
+  for_each        = local.hosts
+  content         = tls_private_key.ssh_keys[each.value].private_key_pem
+  filename        = "${path.module}/${each.value}.pem"
+  file_permission = "0600"
 }
 
 data "http" "my_ip" {
@@ -45,7 +45,7 @@ data "azurerm_subscription" "current" {
 }
 
 module "subscription" {
-  source = "github.com/Azure-Terraform/terraform-azurerm-subscription-data.git?ref=v1.0.0"
+  source          = "github.com/Azure-Terraform/terraform-azurerm-subscription-data.git?ref=v1.0.0"
   subscription_id = data.azurerm_subscription.current.subscription_id
 }
 
@@ -91,14 +91,14 @@ module "virtual_network" {
   address_space = ["10.1.0.0/22"]
 
   subnets = {
-    "iaas-public"  = { cidrs                    = ["10.1.0.0/24"]
-                       allow_vnet_inbound       = true
-                       allow_vnet_outbound      = true
-                     }
-    "iaas-private" = { cidrs                   = ["10.1.1.0/24"]
-                       allow_vnet_inbound       = true
-                       allow_vnet_outbound      = true
-                     }
+    "iaas-public" = { cidrs = ["10.1.0.0/24"]
+      allow_vnet_inbound  = true
+      allow_vnet_outbound = true
+    }
+    "iaas-private" = { cidrs = ["10.1.1.0/24"]
+      allow_vnet_inbound  = true
+      allow_vnet_outbound = true
+    }
   }
 }
 
@@ -107,10 +107,10 @@ resource "azurerm_public_ip" "bastion" {
   resource_group_name = module.resource_group.name
   location            = module.resource_group.location
 
-  allocation_method   = "Static"
-  sku                 = "Basic"
+  allocation_method = "Static"
+  sku               = "Basic"
 
-  tags                = module.metadata.tags
+  tags = module.metadata.tags
 }
 
 resource "azurerm_network_interface" "bastion" {
@@ -125,7 +125,7 @@ resource "azurerm_network_interface" "bastion" {
     public_ip_address_id          = azurerm_public_ip.bastion.id
   }
 
-  tags                = module.metadata.tags
+  tags = module.metadata.tags
 }
 
 resource "azurerm_network_security_rule" "bastion_in" {
@@ -153,7 +153,7 @@ resource "azurerm_network_interface" "private" {
     private_ip_address_allocation = "Dynamic"
   }
 
-  tags                = module.metadata.tags
+  tags = module.metadata.tags
 }
 
 resource "azurerm_linux_virtual_machine" "bastion" {

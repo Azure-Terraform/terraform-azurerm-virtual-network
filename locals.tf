@@ -32,5 +32,4 @@ locals {
       "${id}-${desc}" => merge({ aks_id = id, name = desc }, info)
     }
   ]...)
-
 }
