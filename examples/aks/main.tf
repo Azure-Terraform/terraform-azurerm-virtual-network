@@ -89,7 +89,7 @@ module "virtual_network" {
         cidrs = ["10.1.2.0/24"]
       }
       route_table = {
-        bgp_route_propagation_enabled = true
+        bgp_route_propagation_enabled = false
         routes = {
           internet = {
             address_prefix = "0.0.0.0/0"
@@ -107,7 +107,7 @@ module "virtual_network" {
         cidrs = ["10.1.3.0/24"]
       }
       route_table = {
-        bgp_route_propagation_enabled = true
+        bgp_route_propagation_enabled = false
         routes = {
           internet = {
             address_prefix = "0.0.0.0/0"

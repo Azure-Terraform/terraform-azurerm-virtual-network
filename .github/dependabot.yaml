@@ -1,0 +1,45 @@
+version: 2
+registries:
+  github:
+    type: git
+    url: https://github.com
+    username: x-access-token
+    password: ${{ secrets.REPO_TOKEN }}
+
+updates:
+  - package-ecosystem: github-actions
+    registries: "*"
+    directory: /
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: deps
+    schedule:
+      interval: daily
+
+  - package-ecosystem: terraform
+    registries: "*"
+    directory: /
+    groups:
+      terraform:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: deps
+    schedule:
+      interval: daily
+
+  - package-ecosystem: docker
+    directory: /templates
+    commit-message:
+      prefix: deps
+    schedule:
+      interval: daily

@@ -11,22 +11,22 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683   #v4
       with:
         ref: ${{ github.ref }}
 
     - name: Module
-      uses: terraform-docs/gh-actions@7a62208a0090636af2df1b739da46d27fd90bdc6 # v1.1.0
+      uses: terraform-docs/gh-actions@aeae0038ed47a547e0c0fca5c059d3335f48fb25 
       with:
-        tf_docs_working_dir: .
-        tf_docs_output_file: README.md
-        tf_docs_output_method: inject
-        tf_docs_git_push: 'true'
+        working_dir: .
+        output_file: README.md
+        output_method: inject
+        git_push: 'true'
 
     - name: Submodule
-      uses: terraform-docs/gh-actions@7a62208a0090636af2df1b739da46d27fd90bdc6 # v1.1.0
+      uses: terraform-docs/gh-actions@aeae0038ed47a547e0c0fca5c059d3335f48fb25 
       with:
-        tf_docs_working_dir: ./subnet/
-        tf_docs_output_file: README.md
-        tf_docs_output_method: inject
-        tf_docs_git_push: 'true'
+        working_dir: ./subnet/
+        output_file: README.md
+        output_method: inject
+        git_push: 'true'
