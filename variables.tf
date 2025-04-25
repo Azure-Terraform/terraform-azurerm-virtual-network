@@ -3,6 +3,12 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "name" {
+  description = "Name for VNET resource"
+  type        = string
+  default = null
+}
+
 variable "location" {
   description = "Azure Region"
   type        = string

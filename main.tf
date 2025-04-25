@@ -1,5 +1,5 @@
 resource "azurerm_virtual_network" "vnet" {
-  name                = "${var.names.product_group}-${var.names.subscription_type}-${var.names.location}-vnet"
+  name                = local.virtual_network_name
   location            = var.location
   resource_group_name = var.resource_group_name
   address_space       = var.address_space
