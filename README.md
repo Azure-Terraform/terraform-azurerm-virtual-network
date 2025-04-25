@@ -107,6 +107,7 @@ For a full list of details provided in the output please view:<br />
 | <a name="input_name"></a> [name](#input\_name) | Name for VNET resource | `string` | `null` | no |
 | <a name="input_names"></a> [names](#input\_names) | Names to be applied to resources | `map(string)` | n/a | yes |
 | <a name="input_naming_rules"></a> [naming\_rules](#input\_naming\_rules) | naming conventions yaml file | `string` | `""` | no |
+| <a name="input_network_security_group_name"></a> [network\_security\_group\_name](#input\_network\_security\_group\_name) | Name for NSG resource | `string` | `null` | no |
 | <a name="input_peer_defaults"></a> [peer\_defaults](#input\_peer\_defaults) | Maps of peer arguments. | <pre>object({<br/>    id                           = string<br/>    allow_virtual_network_access = bool<br/>    allow_forwarded_traffic      = bool<br/>    allow_gateway_transit        = bool<br/>    use_remote_gateways          = bool<br/>  })</pre> | <pre>{<br/>  "allow_forwarded_traffic": false,<br/>  "allow_gateway_transit": false,<br/>  "allow_virtual_network_access": true,<br/>  "id": null,<br/>  "use_remote_gateways": false<br/>}</pre> | no |
 | <a name="input_peers"></a> [peers](#input\_peers) | Peer virtual networks.  Keys are names, allowed values are same as for peer\_defaults. Id value is required. | `any` | `{}` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name | `string` | n/a | yes |
