@@ -109,3 +109,9 @@ variable "delegations" {
   }))
   default = {}
 }
+
+variable "network_security_group_name" {
+  description = "name of the network security group"
+  type        = string
+  default     = null  
+}
