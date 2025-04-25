@@ -104,6 +104,7 @@ For a full list of details provided in the output please view:<br />
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | If applicable, a list of custom DNS servers to use inside your virtual network.  Unset will use default Azure-provided resolver | `list(string)` | `null` | no |
 | <a name="input_enforce_subnet_names"></a> [enforce\_subnet\_names](#input\_enforce\_subnet\_names) | enforce subnet names based on naming\_rules variable | `bool` | `true` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure Region | `string` | n/a | yes |
+| <a name="input_name"></a> [name](#input\_name) | Name for VNET resource | `string` | `null` | no |
 | <a name="input_names"></a> [names](#input\_names) | Names to be applied to resources | `map(string)` | n/a | yes |
 | <a name="input_naming_rules"></a> [naming\_rules](#input\_naming\_rules) | naming conventions yaml file | `string` | `""` | no |
 | <a name="input_peer_defaults"></a> [peer\_defaults](#input\_peer\_defaults) | Maps of peer arguments. | <pre>object({<br/>    id                           = string<br/>    allow_virtual_network_access = bool<br/>    allow_forwarded_traffic      = bool<br/>    allow_gateway_transit        = bool<br/>    use_remote_gateways          = bool<br/>  })</pre> | <pre>{<br/>  "allow_forwarded_traffic": false,<br/>  "allow_gateway_transit": false,<br/>  "allow_virtual_network_access": true,<br/>  "id": null,<br/>  "use_remote_gateways": false<br/>}</pre> | no |
