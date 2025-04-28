@@ -110,8 +110,8 @@ variable "delegations" {
   default = {}
 }
 
-variable "network_security_group_name" {
-  description = "name of the network security group"
+variable "prefix" {
+  description = "prefix for the name of the resource"
   type        = string
   default     = null  
 }

@@ -3,8 +3,8 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "name" {
-  description = "Name for VNET resource"
+variable "prefix" {
+  description = "prefix for VNET resource"
   type        = string
   default = null
 }
@@ -147,10 +147,4 @@ variable "peer_defaults" {
     allow_gateway_transit        = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_gateway_transit
     use_remote_gateways          = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#use_remote_gateways
   }
-}
-
-variable "network_security_group_name" {
-  description = "Name for NSG resource"
-  type        = string
-  default     = null
 }
