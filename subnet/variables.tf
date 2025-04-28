@@ -110,8 +110,8 @@ variable "delegations" {
   default = {}
 }
 
-variable "prefix" {
-  description = "prefix for the name of the resource"
+variable "security_group_perfix" {
+  description = "prefix for the name of the security group"
   type        = string
   default     = null  
 }
