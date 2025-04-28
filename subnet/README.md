@@ -103,10 +103,10 @@ No modules.
 | <a name="input_location"></a> [location](#input\_location) | Azure Region | `string` | n/a | yes |
 | <a name="input_names"></a> [names](#input\_names) | names to be applied to resources | `map(string)` | n/a | yes |
 | <a name="input_naming_rules"></a> [naming\_rules](#input\_naming\_rules) | naming conventions yaml file | `string` | `""` | no |
-| <a name="input_prefix"></a> [prefix](#input\_prefix) | prefix for the name of the resource | `string` | `null` | no |
 | <a name="input_private_endpoint_network_policies"></a> [private\_endpoint\_network\_policies](#input\_private\_endpoint\_network\_policies) | Enable or Disable network policies for the private endpoint on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. | `string` | `"Disabled"` | no |
 | <a name="input_private_link_service_network_policies_enabled"></a> [private\_link\_service\_network\_policies\_enabled](#input\_private\_link\_service\_network\_policies\_enabled) | Enable or Disable network policies for the private link service on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. | `bool` | `true` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name | `string` | n/a | yes |
+| <a name="input_security_group_perfix"></a> [security\_group\_perfix](#input\_security\_group\_perfix) | prefix for the name of the security group | `string` | `null` | no |
 | <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | service endpoints to associate with the subnet | `list(string)` | `[]` | no |
 | <a name="input_subnet_type"></a> [subnet\_type](#input\_subnet\_type) | subnet type | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | tags to be applied to resources | `map(string)` | n/a | yes |
