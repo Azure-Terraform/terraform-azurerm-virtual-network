@@ -1,5 +1,5 @@
 locals {
-  virtual_network_name = (var.prefix != null ? "${var.names.prefix}-${var.names.subscription_type}-${var.names.location}-vnet" : "${var.names.product_group}-${var.names.subscription_type}-${var.names.location}-vnet")
+  virtual_network_name = (var.prefix != null ? "${var.prefix}-${var.names.subscription_type}-${var.names.location}-vnet" : "${var.names.product_group}-${var.names.subscription_type}-${var.names.location}-vnet")
 
   enforce_subnet_names = (var.naming_rules == "" ? false : var.enforce_subnet_names)
 
