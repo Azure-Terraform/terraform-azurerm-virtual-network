@@ -110,8 +110,8 @@ variable "delegations" {
   default = {}
 }
 
-variable "security_group_perfix" {
-  description = "prefix for the name of the security group"
-  type        = string
-  default     = null  
+variable "use_product_name" {
+  description = "use product_name in the name of the security group"
+  type        = bool
+  default     = false
 }

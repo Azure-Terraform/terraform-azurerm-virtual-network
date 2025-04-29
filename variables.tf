@@ -3,10 +3,10 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "use_product_name_in_name" {
+variable "use_product_name" {
   description = "user product_name as prefix for VNET resource"
-  type        = string
-  default     = null
+  type        = bool
+  default     = false
 }
 
 variable "location" {
@@ -147,10 +147,4 @@ variable "peer_defaults" {
     allow_gateway_transit        = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_gateway_transit
     use_remote_gateways          = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#use_remote_gateways
   }
-}
-
-variable "security_group_perfix" {
-  description = "Prefix for security group names"
-  type        = string
-  default     = null
 }
