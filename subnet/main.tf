@@ -32,7 +32,7 @@ resource "azurerm_subnet_network_security_group_association" "subnet_nsg" {
 resource "azurerm_network_security_group" "nsg" {
   count = (var.create_network_security_group ? 1 : 0)
 
-  name                = "${var.names.resource_group_type}-${var.names.product_name}-${var.subnet_type}-security-group"
+  name                = local.network_security_group_name
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = merge(var.tags, { subnet_type = lookup(local.allowed_subnet_info, var.subnet_type, var.subnet_type) })

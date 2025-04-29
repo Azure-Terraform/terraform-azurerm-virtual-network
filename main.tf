@@ -1,5 +1,5 @@
 resource "azurerm_virtual_network" "vnet" {
-  name                = "${var.names.product_group}-${var.names.subscription_type}-${var.names.location}-vnet"
+  name                = local.virtual_network_name
   location            = var.location
   resource_group_name = var.resource_group_name
   address_space       = var.address_space
@@ -15,7 +15,7 @@ module "subnet" {
   resource_group_name = var.resource_group_name
   location            = var.location
   tags                = var.tags
-
+  use_product_name = var.use_product_name
   naming_rules         = var.naming_rules
   enforce_subnet_names = local.enforce_subnet_names
 
