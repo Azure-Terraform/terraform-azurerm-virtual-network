@@ -4,7 +4,7 @@ variable "resource_group_name" {
 }
 
 variable "use_product_name" {
-  description = "user product_name as prefix for VNET resource"
+  description = "use product_name as prefix for VNET resource"
   type        = bool
   default     = false
 }
