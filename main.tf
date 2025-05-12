@@ -15,7 +15,6 @@ module "subnet" {
   resource_group_name  = var.resource_group_name
   location             = var.location
   tags                 = var.tags
-  use_product_name     = var.use_product_name
   naming_rules         = var.naming_rules
   enforce_subnet_names = local.enforce_subnet_names
 
@@ -30,6 +29,7 @@ module "subnet" {
   delegations       = each.value.delegations
 
   create_network_security_group = each.value.create_network_security_group
+  security_group_prefix         = each.value.security_group_prefix
   configure_nsg_rules           = each.value.configure_nsg_rules
   allow_internet_outbound       = each.value.allow_internet_outbound
   allow_lb_inbound              = each.value.allow_lb_inbound
