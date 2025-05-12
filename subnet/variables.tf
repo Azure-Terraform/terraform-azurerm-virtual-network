@@ -109,3 +109,9 @@ variable "delegations" {
   }))
   default = {}
 }
+
+variable "use_product_name" {
+  description = "use product_name in the name of the security group"
+  type        = bool
+  default     = false
+}

@@ -109,6 +109,7 @@ No modules.
 | <a name="input_service_endpoints"></a> [service\_endpoints](#input\_service\_endpoints) | service endpoints to associate with the subnet | `list(string)` | `[]` | no |
 | <a name="input_subnet_type"></a> [subnet\_type](#input\_subnet\_type) | subnet type | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | tags to be applied to resources | `map(string)` | n/a | yes |
+| <a name="input_use_product_name"></a> [use\_product\_name](#input\_use\_product\_name) | use product\_name in the name of the security group | `bool` | `false` | no |
 | <a name="input_virtual_network_name"></a> [virtual\_network\_name](#input\_virtual\_network\_name) | virtual network name | `string` | n/a | yes |
 
 ## Outputs
