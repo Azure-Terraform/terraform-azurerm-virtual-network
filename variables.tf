@@ -89,12 +89,13 @@ variable "subnet_defaults" {
       name    = string
       actions = list(string)
     }))
-    create_network_security_group = bool # create/associate network security group with subnet
-    configure_nsg_rules           = bool # deny ingress/egress traffic and configure nsg rules based on below parameters
-    allow_internet_outbound       = bool # allow outbound traffic to internet (configure_nsg_rules must be set to true)
-    allow_lb_inbound              = bool # allow inbound traffic from Azure Load Balancer (configure_nsg_rules must be set to true)
-    allow_vnet_inbound            = bool # allow all inbound from virtual network (configure_nsg_rules must be set to true)
-    allow_vnet_outbound           = bool # allow all outbound from virtual network (configure_nsg_rules must be set to true)
+    create_network_security_group = bool   # create/associate network security group with subnet
+    security_group_prefix         = string # prefix for network security group name
+    configure_nsg_rules           = bool   # deny ingress/egress traffic and configure nsg rules based on below parameters
+    allow_internet_outbound       = bool   # allow outbound traffic to internet (configure_nsg_rules must be set to true)
+    allow_lb_inbound              = bool   # allow inbound traffic from Azure Load Balancer (configure_nsg_rules must be set to true)
+    allow_vnet_inbound            = bool   # allow all inbound from virtual network (configure_nsg_rules must be set to true)
+    allow_vnet_outbound           = bool   # allow all outbound from virtual network (configure_nsg_rules must be set to true)
     route_table_association       = string
   })
   default = {
@@ -104,6 +105,7 @@ variable "subnet_defaults" {
     service_endpoints                             = []
     delegations                                   = {}
     create_network_security_group                 = true
+    security_group_prefix                         = null
     configure_nsg_rules                           = true
     allow_internet_outbound                       = false
     allow_lb_inbound                              = false
