@@ -3,6 +3,12 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "virtual_network_name" {
+  description = "Optional override for the virtual network name. If not set, name is generated from other variables."
+  type        = string
+  default     = "${var.names.product_group}-${var.names.subscription_type}-${var.names.location}-vnet"
+}
+
 variable "location" {
   description = "Azure Region"
   type        = string
