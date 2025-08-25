@@ -114,6 +114,7 @@ For a full list of details provided in the output please view:<br />
 | <a name="input_subnets"></a> [subnets](#input\_subnets) | Map of subnets. Keys are subnet names, Allowed values are the same as for subnet\_defaults | `any` | `{}` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to be applied to resources | `map(string)` | n/a | yes |
 | <a name="input_use_product_name"></a> [use\_product\_name](#input\_use\_product\_name) | use product\_name as prefix for VNET resource | `bool` | `false` | no |
+| <a name="input_virtual_network_name"></a> [virtual\_network\_name](#input\_virtual\_network\_name) | Optional override for the virtual network name. If not set, name is generated from other variables. | `string` | `null` | no |
 
 ## Outputs
 
