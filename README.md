@@ -9,6 +9,16 @@ Naming convention for this service is as follows:
 service-market-environment-location-product
 <br />
 
+## Templates
+
+The `templates/` directory contains Docker and shell script templates for working with this module:
+
+- **Dockerfile**: Ubuntu 24.04 based container with Terraform and Azure CLI
+- **create-users.sh**: Secure user creation script for Ubuntu 24.04 systems
+- **README.md**: Detailed documentation for the templates
+
+See [templates/README.md](templates/README.md) for usage instructions.
+
 <!--- BEGIN_TF_DOCS --->
 ## Requirements
 
