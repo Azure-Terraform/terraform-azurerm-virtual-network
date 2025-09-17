@@ -179,8 +179,8 @@ resource "azurerm_linux_virtual_machine" "bastion" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "24_04-lts-gen2"
     version   = "latest"
   }
 }
@@ -208,8 +208,8 @@ resource "azurerm_linux_virtual_machine" "private" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "24_04-lts-gen2"
     version   = "latest"
   }
 }
