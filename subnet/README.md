@@ -95,7 +95,7 @@ No modules.
 | <a name="input_allow_lb_inbound"></a> [allow\_lb\_inbound](#input\_allow\_lb\_inbound) | allow inbound traffic from Azure Load Balancer | `bool` | `false` | no |
 | <a name="input_allow_vnet_inbound"></a> [allow\_vnet\_inbound](#input\_allow\_vnet\_inbound) | allow all inbound from virtual network | `bool` | `false` | no |
 | <a name="input_allow_vnet_outbound"></a> [allow\_vnet\_outbound](#input\_allow\_vnet\_outbound) | allow all outbound from virtual network | `bool` | `false` | no |
-| <a name="input_cidrs"></a> [cidrs](#input\_cidrs) | CIDRs for subnet | `list(string)` | n/a | yes |
+| <a name="input_cidrs"></a> [cidrs](#input\_cidrs) | CIDRs for subnet. Optional when using IPAM pools. | `list(string)` | `[]` | no |
 | <a name="input_configure_nsg_rules"></a> [configure\_nsg\_rules](#input\_configure\_nsg\_rules) | Configure network security group rules | `bool` | `false` | no |
 | <a name="input_create_network_security_group"></a> [create\_network\_security\_group](#input\_create\_network\_security\_group) | Create/associate network security group | `bool` | `true` | no |
 | <a name="input_delegations"></a> [delegations](#input\_delegations) | delegation blocks for services | <pre>map(object({<br/>    name    = string<br/>    actions = list(string)<br/>  }))</pre> | `{}` | no |
