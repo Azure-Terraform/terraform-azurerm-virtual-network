@@ -45,5 +45,6 @@ The example assumes you have:
 - The `number_of_ip_addresses` parameter specifies how many IPs to allocate from the pool
 - **Current Implementation**: This module stores IPAM pool configuration but does not create actual IP allocations
 - **Actual IP Allocation**: Must be handled outside this module using Azure CLI, PowerShell, or when `azurerm_network_manager_ipam_pool_static_cidr` becomes available
+- **CIDR Requirements**: Base CIDR blocks are still required for Azure subnet resources, even when using IPAM pools
+- **IPAM Usage Pattern**: IPAM pools provide additional IP management on top of base subnet CIDRs
 - Both VNet and individual subnets can have IPAM pool configurations
-- Traditional CIDR blocks are still required for subnet creation

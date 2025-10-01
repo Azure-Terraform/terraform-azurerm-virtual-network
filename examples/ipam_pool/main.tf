@@ -52,10 +52,11 @@ module "virtual_network" {
   # Configure subnets with mixed IPAM pool and traditional CIDR configuration
   subnets = {
     # Subnet using IPAM pool allocation
+    # Note: Base CIDR still required for Azure subnet resource
     web = {
-      cidrs                   = ["10.0.1.0/24"] # May still need CIDR for subnet creation
+      cidrs                   = ["10.0.1.0/24"] # Base subnet CIDR
       ip_address_pool         = data.azurerm_network_manager_ipam_pool.main.id
-      number_of_ip_addresses  = 100
+      number_of_ip_addresses  = 100 # Additional IPs from IPAM pool
       allow_internet_outbound = true
       allow_vnet_inbound      = true
       allow_vnet_outbound     = true
@@ -70,9 +71,9 @@ module "virtual_network" {
 
     # Another subnet with IPAM pool
     data = {
-      cidrs                  = ["10.0.3.0/24"]
+      cidrs                  = ["10.0.3.0/24"] # Base subnet CIDR
       ip_address_pool        = data.azurerm_network_manager_ipam_pool.main.id
-      number_of_ip_addresses = 50
+      number_of_ip_addresses = 50 # Additional IPs from IPAM pool
       allow_vnet_inbound     = true
       allow_vnet_outbound    = true
     }

@@ -2,7 +2,10 @@ resource "azurerm_subnet" "subnet" {
   name                 = var.subnet_type
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.virtual_network_name
-  address_prefixes     = var.cidrs
+  # For IPAM pools, address_prefixes should be dynamically allocated
+  # Currently, Azure provider may still require address_prefixes even with IPAM
+  # This is a limitation that will be resolved when IPAM pool resources are fully supported
+  address_prefixes = var.cidrs
 
   private_endpoint_network_policies             = var.private_endpoint_network_policies
   private_link_service_network_policies_enabled = var.private_link_service_network_policies_enabled

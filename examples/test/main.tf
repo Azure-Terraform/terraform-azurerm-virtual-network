@@ -42,14 +42,16 @@ module "virtual_network" {
   # Test subnets with IPAM pool configuration (configuration only, no actual allocation)
   subnets = {
     test-basic = {
-      cidrs               = ["10.0.1.0/24"]
+      cidrs               = ["10.0.1.0/24"] # Traditional CIDR allocation
       allow_vnet_inbound  = true
       allow_vnet_outbound = true
     }
     test-ipam = {
-      cidrs                  = ["10.0.2.0/24"]
+      # Note: CIDRs still required for Azure subnet resource, even with IPAM pools
+      # This is a current limitation - IPAM pool handles additional IP management
+      cidrs                  = ["10.0.2.0/24"] # Base subnet CIDR
       ip_address_pool        = "/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/rg-network-manager/providers/Microsoft.Network/networkManagers/nm-test/ipamPools/pool-test"
-      number_of_ip_addresses = 50
+      number_of_ip_addresses = 50 # Additional IPs from IPAM pool
       allow_vnet_inbound     = true
       allow_vnet_outbound    = true
     }
