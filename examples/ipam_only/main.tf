@@ -42,7 +42,9 @@ module "virtual_network" {
   ip_address_pool         = local.example_ipam_pool_id
   number_of_ip_addresses  = 256  # /24 equivalent
 
-  address_space = ["10.0.0.0/16"]  # This may be overridden by IPAM allocation
+  # When using IPAM pools, address_space will be dynamically allocated
+  # This placeholder is required by current Azure provider limitations
+  address_space = ["0.0.0.0/8"]  # Placeholder - will be replaced by IPAM allocation
 
   subnets = {
     # Subnet using only IPAM pool (no CIDRs specified)

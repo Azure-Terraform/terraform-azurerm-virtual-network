@@ -69,4 +69,30 @@ The module now includes lifecycle precondition validation:
 ✅ **Working**: Validation ensures proper configuration  
 ✅ **Working**: Backward compatibility maintained  
 ⚠️ **Limitation**: Azure provider still requires address_prefixes internally  
+⚠️ **Limitation**: VNet address_space also requires placeholder values when using IPAM pools  
 🔮 **Future**: Full dynamic allocation when Azure provider adds complete IPAM support
+
+### Address Space Considerations
+
+When using IPAM pools, both subnet CIDRs and VNet address_space need placeholder values due to current Azure provider limitations:
+
+```hcl
+# IPAM pool configuration with placeholders
+module "virtual_network" {
+  # Placeholder address_space - will be dynamically allocated by IPAM
+  address_space = ["0.0.0.0/8"]  # Broad placeholder range
+  
+  ip_address_pool        = "/subscriptions/.../ipamPools/pool"
+  number_of_ip_addresses = 1000
+  
+  subnets = {
+    web = {
+      # No cidrs needed - allocated from IPAM pool
+      ip_address_pool        = "/subscriptions/.../ipamPools/pool"
+      number_of_ip_addresses = 256
+    }
+  }
+}
+```
+
+The `0.0.0.0/8` placeholder provides a very broad range that won't conflict with typical IPAM pool allocations.

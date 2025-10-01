@@ -50,9 +50,9 @@ variable "ipam_pool_name" {
 }
 
 variable "address_space" {
-  description = "Address space for the virtual network"
+  description = "Address space for the virtual network. When using IPAM pools, this serves as a placeholder and will be dynamically allocated."
   type        = list(string)
-  default     = ["10.0.0.0/16"]
+  default     = ["0.0.0.0/8"]  # Placeholder when using IPAM pools
 }
 
 variable "vnet_ip_count" {
