@@ -34,10 +34,10 @@ module "virtual_network" {
 
   resource_group_name = azurerm_resource_group.example.name
   location            = azurerm_resource_group.example.location
-  
+
   # When using IPAM pools, address_space serves as placeholder
   # Actual address allocation will be handled by the IPAM pool
-  address_space       = var.address_space
+  address_space = var.address_space
 
   names = {
     product_name      = var.product_name

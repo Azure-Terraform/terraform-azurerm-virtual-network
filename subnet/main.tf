@@ -2,7 +2,7 @@ resource "azurerm_subnet" "subnet" {
   name                 = var.subnet_type
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.virtual_network_name
-  
+
   # CIDRs are optional when using IPAM pools
   # If no CIDRs provided and IPAM pool is specified, the IPAM pool will handle IP allocation
   # Note: Azure provider currently still requires address_prefixes, this will be resolved

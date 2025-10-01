@@ -30,40 +30,40 @@ module "virtual_network" {
 
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  
+
   # Required naming configuration
   names = {
     environment = "dev"
     location    = "eus"
     product     = "ipam"
   }
-  
+
   # VNet-level IPAM configuration
-  ip_address_pool         = local.example_ipam_pool_id
-  number_of_ip_addresses  = 256  # /24 equivalent
+  ip_address_pool        = local.example_ipam_pool_id
+  number_of_ip_addresses = 256 # /24 equivalent
 
   # When using IPAM pools, address_space will be dynamically allocated
   # This placeholder is required by current Azure provider limitations
-  address_space = ["0.0.0.0/8"]  # Placeholder - will be replaced by IPAM allocation
+  address_space = ["0.0.0.0/8"] # Placeholder - will be replaced by IPAM allocation
 
   subnets = {
     # Subnet using only IPAM pool (no CIDRs specified)
     web = {
       # No cidrs specified - will use IPAM pool allocation
       ip_address_pool        = local.example_ipam_pool_id
-      number_of_ip_addresses = 64  # /26 equivalent
+      number_of_ip_addresses = 64 # /26 equivalent
     }
-    
+
     # Traditional subnet with explicit CIDRs (still supported)
     database = {
       cidrs = ["10.0.2.0/24"]
     }
-    
+
     # Mixed: both CIDRs and IPAM pool can coexist
     app = {
       cidrs                  = ["10.0.3.0/24"]
       ip_address_pool        = local.example_ipam_pool_id
-      number_of_ip_addresses = 32  # Additional IPAM allocation
+      number_of_ip_addresses = 32 # Additional IPAM allocation
     }
   }
 
