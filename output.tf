@@ -82,3 +82,40 @@ output "route_tables" {
     }
   }
 }
+
+# IPAM Pool Outputs
+output "vnet_ipam_allocation" {
+  description = "Virtual Network IPAM pool allocation information."
+  value = var.ip_address_pool != null && var.number_of_ip_addresses != null ? {
+    pool_id                 = var.ip_address_pool
+    number_of_ip_addresses  = var.number_of_ip_addresses
+    static_member_id        = azurerm_network_manager_static_member.vnet_ipam[0].id
+    target_virtual_network  = azurerm_virtual_network.vnet.id
+  } : null
+}
+
+output "subnet_ipam_allocations" {
+  description = "Subnet IPAM pool allocation information."
+  value = {
+    for subnet_name, subnet_config in local.subnets :
+    subnet_name => subnet_config.ip_address_pool != null && subnet_config.number_of_ip_addresses != null ? {
+      pool_id                = subnet_config.ip_address_pool
+      number_of_ip_addresses = subnet_config.number_of_ip_addresses
+      subnet_id              = module.subnet[subnet_name].id
+    } : null
+    if subnet_config.ip_address_pool != null && subnet_config.number_of_ip_addresses != null
+  }
+}
+
+output "aks_subnet_ipam_allocations" {
+  description = "AKS Subnet IPAM pool allocation information."
+  value = {
+    for subnet_name, subnet_config in local.aks_subnets :
+    subnet_name => subnet_config.ip_address_pool != null && subnet_config.number_of_ip_addresses != null ? {
+      pool_id                = subnet_config.ip_address_pool
+      number_of_ip_addresses = subnet_config.number_of_ip_addresses
+      subnet_id              = module.aks_subnet[subnet_name].id
+    } : null
+    if subnet_config.ip_address_pool != null && subnet_config.number_of_ip_addresses != null
+  }
+}

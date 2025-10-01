@@ -115,3 +115,16 @@ variable "security_group_prefix" {
   type        = string
   default     = null
 }
+
+# IPAM Pool Configuration
+variable "ip_address_pool" {
+  description = "Reference to Azure Network Manager IPAM Pool resource ID for IP address allocation"
+  type        = string
+  default     = null
+}
+
+variable "number_of_ip_addresses" {
+  description = "Number of IP addresses to allocate from the IPAM pool for this subnet"
+  type        = number
+  default     = null
+}

@@ -133,3 +133,12 @@ resource "azurerm_network_security_rule" "allow_vnet_outbound" {
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.0.name
 }
+
+# IPAM Pool Static CIDR Allocation
+resource "azurerm_network_manager_static_member" "subnet_ipam" {
+  count = (var.ip_address_pool != null && var.number_of_ip_addresses != null) ? 1 : 0
+
+  name                      = "${var.subnet_type}-ipam-allocation"
+  network_group_id          = var.ip_address_pool
+  target_virtual_network_id = azurerm_subnet.subnet.virtual_network_id
+}
