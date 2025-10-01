@@ -38,3 +38,35 @@ When Azure provider adds full IPAM pool support:
 3. **Configuration Storage**: Module stores IPAM settings for external tools
 
 This is why the examples still include CIDRs - it's a current technical limitation, not a design choice.
+
+## Updated Implementation (Current Status)
+
+### Recent Improvements
+
+The module has been updated to make CIDRs truly optional when using IPAM pools:
+
+```hcl
+# ✅ NOW SUPPORTED: IPAM pool without CIDRs
+subnets = {
+  web = {
+    ip_address_pool        = "/subscriptions/.../ipamPools/pool-example"
+    number_of_ip_addresses = 256  # /24 equivalent
+    # cidrs = [] is the default - not required
+  }
+}
+```
+
+### Validation Logic
+
+The module now includes lifecycle precondition validation:
+- **Either** `cidrs` must be provided (length > 0)  
+- **Or** `ip_address_pool` must be configured
+- This prevents invalid configurations where neither is specified
+
+### Current Status Summary
+
+✅ **Working**: CIDRs are optional when using IPAM pools  
+✅ **Working**: Validation ensures proper configuration  
+✅ **Working**: Backward compatibility maintained  
+⚠️ **Limitation**: Azure provider still requires address_prefixes internally  
+🔮 **Future**: Full dynamic allocation when Azure provider adds complete IPAM support

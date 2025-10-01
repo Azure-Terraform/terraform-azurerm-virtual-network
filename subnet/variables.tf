@@ -42,8 +42,9 @@ variable "subnet_type" {
 }
 
 variable "cidrs" {
-  description = "CIDRs for subnet"
+  description = "CIDRs for subnet. Optional when using IPAM pools."
   type        = list(string)
+  default     = []
 }
 
 variable "create_network_security_group" {

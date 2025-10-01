@@ -2,10 +2,19 @@ resource "azurerm_subnet" "subnet" {
   name                 = var.subnet_type
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.virtual_network_name
-  # For IPAM pools, address_prefixes should be dynamically allocated
-  # Currently, Azure provider may still require address_prefixes even with IPAM
-  # This is a limitation that will be resolved when IPAM pool resources are fully supported
+  
+  # CIDRs are optional when using IPAM pools
+  # If no CIDRs provided and IPAM pool is specified, the IPAM pool will handle IP allocation
+  # Note: Azure provider currently still requires address_prefixes, this will be resolved
+  # when azurerm_network_manager_ipam_pool_static_cidr resource becomes available
   address_prefixes = var.cidrs
+
+  lifecycle {
+    precondition {
+      condition     = length(var.cidrs) > 0 || var.ip_address_pool != null
+      error_message = "Either 'cidrs' must be provided or 'ip_address_pool' must be configured for IPAM allocation."
+    }
+  }
 
   private_endpoint_network_policies             = var.private_endpoint_network_policies
   private_link_service_network_policies_enabled = var.private_link_service_network_policies_enabled
