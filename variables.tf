@@ -103,8 +103,8 @@ variable "subnet_defaults" {
     allow_vnet_outbound           = bool   # allow all outbound from virtual network (configure_nsg_rules must be set to true)
     route_table_association       = string
     # IPAM Pool Configuration
-    ip_address_pool               = string # Reference to Azure Network Manager IPAM Pool resource ID
-    number_of_ip_addresses        = number # Number of IP addresses to allocate from IPAM pool for this subnet
+    ip_address_pool        = string # Reference to Azure Network Manager IPAM Pool resource ID
+    number_of_ip_addresses = number # Number of IP addresses to allocate from IPAM pool for this subnet
   })
   default = {
     cidrs                                         = []

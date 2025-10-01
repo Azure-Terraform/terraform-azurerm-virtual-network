@@ -86,12 +86,7 @@ output "route_tables" {
 # IPAM Pool Outputs
 output "vnet_ipam_allocation" {
   description = "Virtual Network IPAM pool allocation information."
-  value = var.ip_address_pool != null && var.number_of_ip_addresses != null ? {
-    pool_id                 = var.ip_address_pool
-    number_of_ip_addresses  = var.number_of_ip_addresses
-    static_member_id        = azurerm_network_manager_static_member.vnet_ipam[0].id
-    target_virtual_network  = azurerm_virtual_network.vnet.id
-  } : null
+  value       = local.vnet_ipam_config
 }
 
 output "subnet_ipam_allocations" {

@@ -33,8 +33,8 @@ module "virtual_network" {
   source = "../.."
 
   resource_group_name = azurerm_resource_group.example.name
-  location           = azurerm_resource_group.example.location
-  address_space      = var.address_space
+  location            = azurerm_resource_group.example.location
+  address_space       = var.address_space
 
   names = {
     product_name      = var.product_name
@@ -53,21 +53,21 @@ module "virtual_network" {
   subnets = {
     # Subnet using IPAM pool allocation
     web = {
-      cidrs                   = ["10.0.1.0/24"]  # May still need CIDR for subnet creation
+      cidrs                   = ["10.0.1.0/24"] # May still need CIDR for subnet creation
       ip_address_pool         = data.azurerm_network_manager_ipam_pool.main.id
       number_of_ip_addresses  = 100
       allow_internet_outbound = true
       allow_vnet_inbound      = true
       allow_vnet_outbound     = true
     }
-    
+
     # Subnet using traditional CIDR only
     app = {
-      cidrs = ["10.0.2.0/24"]
+      cidrs               = ["10.0.2.0/24"]
       allow_vnet_inbound  = true
       allow_vnet_outbound = true
     }
-    
+
     # Another subnet with IPAM pool
     data = {
       cidrs                  = ["10.0.3.0/24"]

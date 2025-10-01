@@ -158,11 +158,15 @@ resource "azurerm_virtual_network_peering" "peer" {
   use_remote_gateways          = each.value.use_remote_gateways
 }
 
-# IPAM Pool Static CIDR Allocation for VNet
-resource "azurerm_network_manager_static_member" "vnet_ipam" {
-  count = (var.ip_address_pool != null && var.number_of_ip_addresses != null) ? 1 : 0
-
-  name                      = "${local.virtual_network_name}-ipam-allocation"
-  network_group_id          = var.ip_address_pool
-  target_virtual_network_id = azurerm_virtual_network.vnet.id
+# IPAM Pool Configuration for VNet
+# Note: The actual IPAM pool allocation should be handled by azurerm_network_manager_ipam_pool_static_cidr
+# or similar resources when they become available in the AzureRM provider.
+# For now, we're storing the configuration for future use or external management.
+locals {
+  vnet_ipam_config = var.ip_address_pool != null && var.number_of_ip_addresses != null ? {
+    pool_id                = var.ip_address_pool
+    number_of_ip_addresses = var.number_of_ip_addresses
+    virtual_network_id     = azurerm_virtual_network.vnet.id
+    virtual_network_name   = local.virtual_network_name
+  } : null
 }

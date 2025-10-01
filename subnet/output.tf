@@ -25,9 +25,5 @@ output "subnet" {
 
 output "ipam_allocation" {
   description = "IPAM pool allocation information for this subnet"
-  value = var.ip_address_pool != null && var.number_of_ip_addresses != null ? {
-    pool_id                = var.ip_address_pool
-    number_of_ip_addresses = var.number_of_ip_addresses
-    static_member_id       = azurerm_network_manager_static_member.subnet_ipam[0].id
-  } : null
+  value       = local.ipam_config
 }
