@@ -40,6 +40,8 @@ No requirements.
 | tags | tags to be applied to resources | `map(string)` | n/a | yes |
 | virtual\_network\_name | virtual network name | `string` | n/a | yes |
 
+| default\_outbound\_access\_enabled | Enable or disable default outbound internet access for the subnet. Set to false to disable default internet access (recommended). | `bool` | `null` | no |
+
 ## Outputs
 
 | Name | Description |
