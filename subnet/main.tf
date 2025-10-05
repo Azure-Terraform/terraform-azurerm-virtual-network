@@ -10,6 +10,8 @@ resource "azurerm_subnet" "subnet" {
 
   service_endpoints = var.service_endpoints
 
+  default_outbound_access_enabled = var.default_outbound_access_enabled
+
   dynamic "delegation" {
     for_each = var.delegations
     content {
