@@ -92,7 +92,7 @@ variable "private_endpoint_network_policies" {
 variable "default_outbound_access_enabled" {
   description = "Enable or disable default outbound internet access for the subnet. Set to false to disable default internet access (recommended)."
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "private_link_service_network_policies_enabled" {
