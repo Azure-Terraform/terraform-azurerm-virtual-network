@@ -36,6 +36,10 @@ module "subnet" {
   allow_lb_inbound              = each.value.allow_lb_inbound
   allow_vnet_inbound            = each.value.allow_vnet_inbound
   allow_vnet_outbound           = each.value.allow_vnet_outbound
+
+  # IPAM Pool Configuration
+  ip_address_pool        = each.value.ip_address_pool
+  number_of_ip_addresses = each.value.number_of_ip_addresses
 }
 
 resource "azurerm_route_table" "route_table" {
@@ -102,6 +106,10 @@ module "aks_subnet" {
 
   create_network_security_group = false
   configure_nsg_rules           = false
+
+  # IPAM Pool Configuration
+  ip_address_pool        = each.value.ip_address_pool
+  number_of_ip_addresses = each.value.number_of_ip_addresses
 }
 
 resource "azurerm_route_table" "aks_route_table" {
@@ -149,4 +157,17 @@ resource "azurerm_virtual_network_peering" "peer" {
   allow_forwarded_traffic      = each.value.allow_forwarded_traffic
   allow_gateway_transit        = each.value.allow_gateway_transit
   use_remote_gateways          = each.value.use_remote_gateways
+}
+
+# IPAM Pool Configuration for VNet
+# Note: The actual IPAM pool allocation should be handled by azurerm_network_manager_ipam_pool_static_cidr
+# or similar resources when they become available in the AzureRM provider.
+# For now, we're storing the configuration for future use or external management.
+locals {
+  vnet_ipam_config = var.ip_address_pool != null && var.number_of_ip_addresses != null ? {
+    pool_id                = var.ip_address_pool
+    number_of_ip_addresses = var.number_of_ip_addresses
+    virtual_network_id     = azurerm_virtual_network.vnet.id
+    virtual_network_name   = local.virtual_network_name
+  } : null
 }

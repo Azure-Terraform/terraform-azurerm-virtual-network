@@ -82,3 +82,35 @@ output "route_tables" {
     }
   }
 }
+
+# IPAM Pool Outputs
+output "vnet_ipam_allocation" {
+  description = "Virtual Network IPAM pool allocation information."
+  value       = local.vnet_ipam_config
+}
+
+output "subnet_ipam_allocations" {
+  description = "Subnet IPAM pool allocation information."
+  value = {
+    for subnet_name, subnet_config in local.subnets :
+    subnet_name => subnet_config.ip_address_pool != null && subnet_config.number_of_ip_addresses != null ? {
+      pool_id                = subnet_config.ip_address_pool
+      number_of_ip_addresses = subnet_config.number_of_ip_addresses
+      subnet_id              = module.subnet[subnet_name].id
+    } : null
+    if subnet_config.ip_address_pool != null && subnet_config.number_of_ip_addresses != null
+  }
+}
+
+output "aks_subnet_ipam_allocations" {
+  description = "AKS Subnet IPAM pool allocation information."
+  value = {
+    for subnet_name, subnet_config in local.aks_subnets :
+    subnet_name => subnet_config.ip_address_pool != null && subnet_config.number_of_ip_addresses != null ? {
+      pool_id                = subnet_config.ip_address_pool
+      number_of_ip_addresses = subnet_config.number_of_ip_addresses
+      subnet_id              = module.aks_subnet[subnet_name].id
+    } : null
+    if subnet_config.ip_address_pool != null && subnet_config.number_of_ip_addresses != null
+  }
+}

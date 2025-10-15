@@ -1,0 +1,98 @@
+# Important Note About IPAM Pool Usage
+
+## Current Azure/Terraform Limitation
+
+You correctly identified that logically, IPAM pools should eliminate the need for traditional CIDR blocks. However, there's currently a limitation in the Azure provider and Azure's implementation:
+
+### The Issue
+- **Azure Subnet Resource**: Still requires `address_prefixes` even when using IPAM pools
+- **Terraform Provider**: Doesn't yet have full IPAM pool resource support
+- **IPAM Workflow**: Currently requires external tools for actual IP allocation
+
+### Current Implementation
+```hcl
+# What we'd ideally want (logical):
+subnet = {
+  ip_address_pool        = "/subscriptions/.../ipamPools/pool"
+  number_of_ip_addresses = 100
+  # No cidrs needed - allocated from pool
+}
+
+# What currently works (with limitation):
+subnet = {
+  cidrs                  = ["10.0.1.0/24"]  # Still required for Azure subnet resource
+  ip_address_pool        = "/subscriptions/.../ipamPools/pool"
+  number_of_ip_addresses = 100              # Additional IP management via IPAM
+}
+```
+
+### Future State
+When Azure provider adds full IPAM pool support:
+- `azurerm_network_manager_ipam_pool_static_cidr` resource
+- Dynamic CIDR allocation from pools
+- No need for manual CIDR specification
+
+### Current Workaround
+1. **Base Subnet**: Use minimal CIDR for Azure subnet resource
+2. **IPAM Pool**: Handle additional IP allocation externally
+3. **Configuration Storage**: Module stores IPAM settings for external tools
+
+This is why the examples still include CIDRs - it's a current technical limitation, not a design choice.
+
+## Updated Implementation (Current Status)
+
+### Recent Improvements
+
+The module has been updated to make CIDRs truly optional when using IPAM pools:
+
+```hcl
+# ✅ NOW SUPPORTED: IPAM pool without CIDRs
+subnets = {
+  web = {
+    ip_address_pool        = "/subscriptions/.../ipamPools/pool-example"
+    number_of_ip_addresses = 256  # /24 equivalent
+    # cidrs = [] is the default - not required
+  }
+}
+```
+
+### Validation Logic
+
+The module now includes lifecycle precondition validation:
+- **Either** `cidrs` must be provided (length > 0)  
+- **Or** `ip_address_pool` must be configured
+- This prevents invalid configurations where neither is specified
+
+### Current Status Summary
+
+✅ **Working**: CIDRs are optional when using IPAM pools  
+✅ **Working**: Validation ensures proper configuration  
+✅ **Working**: Backward compatibility maintained  
+⚠️ **Limitation**: Azure provider still requires address_prefixes internally  
+⚠️ **Limitation**: VNet address_space also requires placeholder values when using IPAM pools  
+🔮 **Future**: Full dynamic allocation when Azure provider adds complete IPAM support
+
+### Address Space Considerations
+
+When using IPAM pools, both subnet CIDRs and VNet address_space need placeholder values due to current Azure provider limitations:
+
+```hcl
+# IPAM pool configuration with placeholders
+module "virtual_network" {
+  # Placeholder address_space - will be dynamically allocated by IPAM
+  address_space = ["0.0.0.0/8"]  # Broad placeholder range
+  
+  ip_address_pool        = "/subscriptions/.../ipamPools/pool"
+  number_of_ip_addresses = 1000
+  
+  subnets = {
+    web = {
+      # No cidrs needed - allocated from IPAM pool
+      ip_address_pool        = "/subscriptions/.../ipamPools/pool"
+      number_of_ip_addresses = 256
+    }
+  }
+}
+```
+
+The `0.0.0.0/8` placeholder provides a very broad range that won't conflict with typical IPAM pool allocations.
