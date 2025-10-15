@@ -33,3 +33,26 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Test files and directories
+tests/.terraform/
+tests/terraform.tfstate*
+tests/.terraform.lock.hcl
+**/test-output/
+**/.test-data/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
