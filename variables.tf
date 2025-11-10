@@ -105,7 +105,7 @@ variable "subnet_defaults" {
   })
   default = {
     cidrs                                         = []
-    private_endpoint_network_policies             = "Disabled"
+    private_endpoint_network_policies             = "Enabled"
     private_link_service_network_policies_enabled = true
     service_endpoints                             = []
     delegations                                   = {}
