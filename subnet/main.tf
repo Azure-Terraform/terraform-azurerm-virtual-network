@@ -2,7 +2,19 @@ resource "azurerm_subnet" "subnet" {
   name                 = var.subnet_type
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.virtual_network_name
-  address_prefixes     = var.cidrs
+
+  # CIDRs are optional when using IPAM pools
+  # If no CIDRs provided and IPAM pool is specified, the IPAM pool will handle IP allocation
+  # Note: Azure provider currently still requires address_prefixes, this will be resolved
+  # when azurerm_network_manager_ipam_pool_static_cidr resource becomes available
+  address_prefixes = var.cidrs
+
+  lifecycle {
+    precondition {
+      condition     = length(var.cidrs) > 0 || var.ip_address_pool != null
+      error_message = "Either 'cidrs' must be provided or 'ip_address_pool' must be configured for IPAM allocation."
+    }
+  }
 
   private_endpoint_network_policies             = var.private_endpoint_network_policies
   private_link_service_network_policies_enabled = var.private_link_service_network_policies_enabled
@@ -134,4 +146,16 @@ resource "azurerm_network_security_rule" "allow_vnet_outbound" {
   destination_address_prefix  = "VirtualNetwork"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.nsg.0.name
+}
+
+# IPAM Pool Static CIDR Allocation
+# Note: The actual IPAM pool allocation should be handled by azurerm_network_manager_ipam_pool_static_cidr
+# or similar resources when they become available in the AzureRM provider.
+# For now, we're storing the configuration for future use.
+locals {
+  ipam_config = var.ip_address_pool != null && var.number_of_ip_addresses != null ? {
+    pool_id                = var.ip_address_pool
+    number_of_ip_addresses = var.number_of_ip_addresses
+    subnet_name            = var.subnet_type
+  } : null
 }

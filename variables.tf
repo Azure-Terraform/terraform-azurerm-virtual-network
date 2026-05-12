@@ -102,6 +102,9 @@ variable "subnet_defaults" {
     allow_vnet_inbound            = bool   # allow all inbound from virtual network (configure_nsg_rules must be set to true)
     allow_vnet_outbound           = bool   # allow all outbound from virtual network (configure_nsg_rules must be set to true)
     route_table_association       = string
+    # IPAM Pool Configuration
+    ip_address_pool        = string # Reference to Azure Network Manager IPAM Pool resource ID
+    number_of_ip_addresses = number # Number of IP addresses to allocate from IPAM pool for this subnet
   })
   default = {
     cidrs                                         = []
@@ -117,6 +120,8 @@ variable "subnet_defaults" {
     allow_vnet_inbound                            = false
     allow_vnet_outbound                           = false
     route_table_association                       = null
+    ip_address_pool                               = null
+    number_of_ip_addresses                        = null
   }
 }
 
@@ -154,4 +159,17 @@ variable "peer_defaults" {
     allow_gateway_transit        = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_gateway_transit
     use_remote_gateways          = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#use_remote_gateways
   }
+}
+
+# IPAM Pool Configuration
+variable "ip_address_pool" {
+  description = "Reference to an existing Azure Network Manager IPAM Pool resource ID for IP address allocation"
+  type        = string
+  default     = null
+}
+
+variable "number_of_ip_addresses" {
+  description = "Number of IP addresses to allocate from the IPAM pool for the virtual network"
+  type        = number
+  default     = null
 }
