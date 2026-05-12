@@ -128,3 +128,72 @@ For a full list of details provided in the output please view:<br />
 | <a name="output_subnets"></a> [subnets](#output\_subnets) | Maps of subnet info. |
 | <a name="output_vnet"></a> [vnet](#output\_vnet) | Virtual network data object. |
 <!-- END_TF_DOCS -->
+
+## Testing
+
+This module includes Terraform native tests that validate:
+
+- Virtual network creation and configuration
+- Subnet creation with various configurations
+- Network security group rules
+- Service endpoints and delegations
+- Route tables and routing
+- Input validation and error handling
+
+### Running Tests
+
+```bash
+# Run all tests
+terraform test
+
+# Run specific test files
+terraform test -filter=tests/basic.tftest.hcl        # Basic functionality
+terraform test -filter=tests/advanced.tftest.hcl     # Complex scenarios
+terraform test -filter=tests/validation.tftest.hcl   # Input validation
+
+# Run with planning only (fast)
+terraform test -no-color
+```
+
+### Test Requirements
+
+- Terraform 1.6 or later (for native testing)
+- Azure CLI configured with appropriate permissions
+- Azure subscription with Contributor access
+
+See [tests/README.md](tests/README.md) for detailed testing documentation.
+
+## Examples
+
+The module includes several example configurations:
+
+- **[Basic VNet](examples/basic/)** - Simple virtual network setup
+- **[VNet with Subnets](examples/with_subnets/)** - Multi-subnet configuration
+- **[AKS Integration](examples/aks/)** - Azure Kubernetes Service networking
+- **[Bastion Host](examples/bastion/)** - Secure remote access setup
+- **[Custom Routes](examples/custom_routes/)** - Custom routing configuration
+
+## Development
+
+### Prerequisites
+
+- Terraform >= 1.6 (for testing)
+- Azure CLI
+
+### Development Workflow
+
+```bash
+# Format code
+terraform fmt -recursive .
+
+# Validate configuration
+terraform init -backend=false
+terraform validate
+
+# Validate examples
+cd examples/basic && terraform init -backend=false && terraform validate
+cd examples/with_subnets && terraform init -backend=false && terraform validate
+
+# Clean temporary files
+# Remove .terraform directories and state files manually as needed
+```

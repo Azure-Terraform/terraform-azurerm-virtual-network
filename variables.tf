@@ -45,12 +45,36 @@ variable "enforce_subnet_names" {
 variable "address_space" {
   description = "CIDRs for virtual network"
   type        = list(string)
+  
+  validation {
+    condition = length(var.address_space) > 0
+    error_message = "Address space cannot be empty."
+  }
+  
+  validation {
+    condition = alltrue([
+      for cidr in var.address_space : can(cidrhost(cidr, 0))
+    ])
+    error_message = "All address spaces must be valid CIDR blocks."
+  }
 }
 
 variable "dns_servers" {
   description = "If applicable, a list of custom DNS servers to use inside your virtual network.  Unset will use default Azure-provided resolver"
   type        = list(string)
   default     = null
+  
+  validation {
+    condition = var.dns_servers == null || length(var.dns_servers) <= 4
+    error_message = "Maximum of 4 DNS servers are supported."
+  }
+  
+  validation {
+    condition = var.dns_servers == null || alltrue([
+      for dns in var.dns_servers : can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}$", dns))
+    ])
+    error_message = "DNS servers must be valid IP addresses."
+  }
 }
 
 variable "subnets" {
@@ -76,8 +100,6 @@ variable "aks_subnets" {
     route_table = object({
       bgp_route_propagation_enabled = bool
       routes                        = map(map(string))
-      # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)
-      # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route
     })
   }))
   default = null
@@ -94,13 +116,13 @@ variable "subnet_defaults" {
       name    = string
       actions = list(string)
     }))
-    create_network_security_group = bool   # create/associate network security group with subnet
-    security_group_prefix         = string # prefix for network security group name
-    configure_nsg_rules           = bool   # deny ingress/egress traffic and configure nsg rules based on below parameters
-    allow_internet_outbound       = bool   # allow outbound traffic to internet (configure_nsg_rules must be set to true)
-    allow_lb_inbound              = bool   # allow inbound traffic from Azure Load Balancer (configure_nsg_rules must be set to true)
-    allow_vnet_inbound            = bool   # allow all inbound from virtual network (configure_nsg_rules must be set to true)
-    allow_vnet_outbound           = bool   # allow all outbound from virtual network (configure_nsg_rules must be set to true)
+    create_network_security_group = bool
+    security_group_prefix         = string
+    configure_nsg_rules           = bool
+    allow_internet_outbound       = bool
+    allow_lb_inbound              = bool
+    allow_vnet_inbound            = bool
+    allow_vnet_outbound           = bool
     route_table_association       = string
   })
   default = {
@@ -124,10 +146,8 @@ variable "route_tables" {
   description = "Maps of route tables"
   type = map(object({
     bgp_route_propagation_enabled = bool
-    use_inline_routes             = bool # Setting to true will revert any external route additions.
+    use_inline_routes             = bool
     routes                        = map(map(string))
-    # keys are route names, value map is route properties (address_prefix, next_hop_type, next_hop_in_ip_address)
-    # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/route_table#route
   }))
   default = {}
 }
@@ -148,10 +168,10 @@ variable "peer_defaults" {
     use_remote_gateways          = bool
   })
   default = {
-    id                           = null  # remote virtual network id
-    allow_virtual_network_access = true  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_virtual_network_access
-    allow_forwarded_traffic      = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_forwarded_traffic
-    allow_gateway_transit        = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#allow_gateway_transit
-    use_remote_gateways          = false # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering#use_remote_gateways
+    id                           = null
+    allow_virtual_network_access = true
+    allow_forwarded_traffic      = false
+    allow_gateway_transit        = false
+    use_remote_gateways          = false
   }
 }
