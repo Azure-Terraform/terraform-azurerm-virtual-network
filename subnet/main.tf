@@ -8,9 +8,9 @@ resource "azurerm_subnet" "subnet" {
   private_link_service_network_policies_enabled = var.private_link_service_network_policies_enabled
 
   dynamic "service_endpoint" {
-    for_each = var.service_endpoints
+    for_each = toset(var.service_endpoints)
     content {
-      service = service_endpoint.key
+      service = service_endpoint.value
     }
   }
 
