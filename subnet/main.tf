@@ -7,8 +7,12 @@ resource "azurerm_subnet" "subnet" {
   private_endpoint_network_policies             = var.private_endpoint_network_policies
   private_link_service_network_policies_enabled = var.private_link_service_network_policies_enabled
 
-
-  service_endpoints = var.service_endpoints
+  dynamic "service_endpoint" {
+    for_each = var.service_endpoints
+    content {
+      service = service_endpoint.key
+    }
+  }
 
   default_outbound_access_enabled = var.default_outbound_access_enabled
 
