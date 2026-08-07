@@ -36,7 +36,6 @@ output "subnets" {
       id                          = subnet.subnet.id
       resource_group_name         = subnet.subnet.resource_group_name
       address_prefixes            = subnet.subnet.address_prefixes
-      service_endpoints           = subnet.subnet.service_endpoints
       network_security_group_name = subnet.network_security_group_name
       network_security_group_id   = subnet.network_security_group_id
       virtual_network_name        = azurerm_virtual_network.vnet.name
@@ -57,7 +56,6 @@ output "aks" {
         id                          = module.aks_subnet[(startswith(aks_id, "aks-") ? aks_id : "aks-${aks_id}")].subnet.id
         resource_group_name         = module.aks_subnet[(startswith(aks_id, "aks-") ? aks_id : "aks-${aks_id}")].subnet.resource_group_name
         address_prefixes            = module.aks_subnet[(startswith(aks_id, "aks-") ? aks_id : "aks-${aks_id}")].subnet.address_prefixes
-        service_endpoints           = module.aks_subnet[(startswith(aks_id, "aks-") ? aks_id : "aks-${aks_id}")].subnet.service_endpoints
         network_security_group_id   = module.aks_subnet[(startswith(aks_id, "aks-") ? aks_id : "aks-${aks_id}")].network_security_group_id
         network_security_group_name = module.aks_subnet[(startswith(aks_id, "aks-") ? aks_id : "aks-${aks_id}")].network_security_group_name
         virtual_network_name        = azurerm_virtual_network.vnet.name
