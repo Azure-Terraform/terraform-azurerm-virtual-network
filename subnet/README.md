@@ -97,15 +97,17 @@ No modules.
 | <a name="input_allow_lb_inbound"></a> [allow\_lb\_inbound](#input\_allow\_lb\_inbound) | allow inbound traffic from Azure Load Balancer | `bool` | `false` | no |
 | <a name="input_allow_vnet_inbound"></a> [allow\_vnet\_inbound](#input\_allow\_vnet\_inbound) | allow all inbound from virtual network | `bool` | `false` | no |
 | <a name="input_allow_vnet_outbound"></a> [allow\_vnet\_outbound](#input\_allow\_vnet\_outbound) | allow all outbound from virtual network | `bool` | `false` | no |
-| <a name="input_cidrs"></a> [cidrs](#input\_cidrs) | CIDRs for subnet | `list(string)` | n/a | yes |
+| <a name="input_cidrs"></a> [cidrs](#input\_cidrs) | CIDRs for subnet. Optional when using IPAM pools. | `list(string)` | `[]` | no |
 | <a name="input_configure_nsg_rules"></a> [configure\_nsg\_rules](#input\_configure\_nsg\_rules) | Configure network security group rules | `bool` | `false` | no |
 | <a name="input_create_network_security_group"></a> [create\_network\_security\_group](#input\_create\_network\_security\_group) | Create/associate network security group | `bool` | `true` | no |
 | <a name="input_default_outbound_access_enabled"></a> [default\_outbound\_access\_enabled](#input\_default\_outbound\_access\_enabled) | Enable or disable default outbound internet access for the subnet. Set to false to disable default internet access (recommended). | `bool` | `true` | no |
 | <a name="input_delegations"></a> [delegations](#input\_delegations) | delegation blocks for services | <pre>map(object({<br/>    name    = string<br/>    actions = list(string)<br/>  }))</pre> | `{}` | no |
 | <a name="input_enforce_subnet_names"></a> [enforce\_subnet\_names](#input\_enforce\_subnet\_names) | enforce subnet naming rules | `bool` | `false` | no |
+| <a name="input_ip_address_pool"></a> [ip\_address\_pool](#input\_ip\_address\_pool) | Reference to Azure Network Manager IPAM Pool resource ID for IP address allocation | `string` | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | Azure Region | `string` | n/a | yes |
 | <a name="input_names"></a> [names](#input\_names) | names to be applied to resources | `map(string)` | n/a | yes |
 | <a name="input_naming_rules"></a> [naming\_rules](#input\_naming\_rules) | naming conventions yaml file | `string` | `""` | no |
+| <a name="input_number_of_ip_addresses"></a> [number\_of\_ip\_addresses](#input\_number\_of\_ip\_addresses) | Number of IP addresses to allocate from the IPAM pool for this subnet | `number` | `null` | no |
 | <a name="input_private_endpoint_network_policies"></a> [private\_endpoint\_network\_policies](#input\_private\_endpoint\_network\_policies) | Enable or Disable network policies for the private endpoint on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. | `string` | `"Disabled"` | no |
 | <a name="input_private_link_service_network_policies_enabled"></a> [private\_link\_service\_network\_policies\_enabled](#input\_private\_link\_service\_network\_policies\_enabled) | Enable or Disable network policies for the private link service on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. | `bool` | `true` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | Resource group name | `string` | n/a | yes |
@@ -120,6 +122,7 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_id"></a> [id](#output\_id) | subnet id |
+| <a name="output_ipam_allocation"></a> [ipam\_allocation](#output\_ipam\_allocation) | IPAM pool allocation information for this subnet |
 | <a name="output_name"></a> [name](#output\_name) | subnet name |
 | <a name="output_network_security_group_id"></a> [network\_security\_group\_id](#output\_network\_security\_group\_id) | network security group id |
 | <a name="output_network_security_group_name"></a> [network\_security\_group\_name](#output\_network\_security\_group\_name) | network security group name |

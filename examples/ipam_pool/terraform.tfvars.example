@@ -1,0 +1,33 @@
+# Example terraform.tfvars file
+# Copy this file to terraform.tfvars and update the values
+
+# Required: Network Manager and IPAM Pool information
+network_manager_name                = "my-network-manager"
+network_manager_resource_group_name = "rg-network-manager"
+ipam_pool_name                      = "my-ipam-pool"
+
+# Optional: Override default values
+resource_group_name = "rg-vnet-ipam-demo"
+location           = "East US"
+location_short     = "eastus"
+
+# Network configuration - when using IPAM pools
+# address_space serves as placeholder - actual addresses allocated by IPAM pool
+address_space  = ["0.0.0.0/8"]  # Placeholder for IPAM pool allocation
+vnet_ip_count  = 1000
+
+# AKS configuration
+enable_aks = true
+
+# Resource naming
+product_name      = "demo"
+product_group     = "platform"
+subscription_type = "dev"
+
+# Tags
+tags = {
+  Environment = "Development"
+  Project     = "IPAM Pool Demo"
+  Owner       = "Platform Team"
+  CostCenter  = "Engineering"
+}

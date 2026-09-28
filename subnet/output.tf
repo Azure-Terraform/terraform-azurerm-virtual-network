@@ -22,3 +22,8 @@ output "subnet" {
   description = "subnet data object"
   value       = azurerm_subnet.subnet
 }
+
+output "ipam_allocation" {
+  description = "IPAM pool allocation information for this subnet"
+  value       = local.ipam_config
+}
