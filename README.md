@@ -1,3 +1,5 @@
+> **Deprecated:** This repository is deprecated and is not recommended for new deployments.
+
 # Azure - Virtual Network Module
 
 ## Introduction
